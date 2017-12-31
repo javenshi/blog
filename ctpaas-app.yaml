@@ -1,0 +1,60 @@
+
+# default Dockerfile use nginx, which use port 80, need to in align with app's port
+app:
+  ports:
+    - 8080
+    - 7777
+    - 8000
+    - 8443
+
+development:
+  services:
+    - mysql
+
+test:
+  #  ci_image has python, java runtime
+  image: ci_image
+
+  #  These service will export env variables,
+  #  which may be used by ci container and app container
+  services:
+    - mysql
+
+  # These env are  injected to ci containers and app container
+  # not services container, ci container
+  env:
+    - MYENV = "hello"
+    - CTPAAS_TEST = "True"
+
+  # TODO: The installation will be cached.
+  # Better is try to create your own ci image
+  # and avoid installing new packages
+  #install:
+  #  - apt-get install -y  jdk8
+
+  # Prepare the test environment each time
+  # WORKDIR is source code dir
+  before_script:
+    #- mysql -h $MYSQL_SERVICE_HOST -P $MYSQL_SERVICE_PORT -uroot -pcentling  mydb < db/db.sql
+    - echo "run setup.."
+    - echo "run setup2.."
+
+  # APP_URL env is injected to ci container.
+  # Test script will use the env variable
+  #script:
+  #  - env
+  #  - cat /etc/hosts
+  #  - echo $APP_URL
+  #  - curl $APP_URL
+
+demo:
+  services:
+    - mysql
+
+production:
+  services:
+    - mysql
+    - redis
+
+
+

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<hazelcast xsi:schemaLocation="http://www.hazelcast.com/schema/config hazelcast-config-3.8.xsd"
+           xmlns="http://www.hazelcast.com/schema/config"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <group>
+        <name>dev</name>
+        <!--<password>edwin_base</password>-->
+    </group>
+    <map name="com.centling.mapper.*">
+        <time-to-live-seconds>10</time-to-live-seconds>
+        <max-size>200</max-size>
+        <read-backup-data>true</read-backup-data>
+        <backup-count>0</backup-count>
+        <eviction-policy>LRU</eviction-policy>
+        <min-eviction-check-millis>100</min-eviction-check-millis>
+        <eviction-percentage>30</eviction-percentage>
+        <merge-policy>com.hazelcast.map.merge.LatestUpdateMapMergePolicy</merge-policy>
+    </map>
+
+    <network>
+        <port auto-increment="true" port-count="20">5701</port>
+        <join>
+            <multicast enabled="false"></multicast>
+            <tcp-ip enabled="true">
+                <member>127.0.0.1</member>
+            </tcp-ip>
+
+        </join>
+    </network>
+    <!--<management-center enabled="true">-->
+        <!--http://127.0.0.1:8080/mancenter-3.8.3-->
+    <!--</management-center>-->
+
+</hazelcast>

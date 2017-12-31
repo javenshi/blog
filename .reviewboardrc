@@ -1,0 +1,3 @@
+REVIEWBOARD_URL = 'http://reviewboard.eng.centling.com'
+REPOSITORY = 'blog'
+BRANCH = 'master'
