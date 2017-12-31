@@ -2,9 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.centling.mapper.blog.UserMapper">
         <select id="selectByNameAndId" resultType="java.lang.Integer">
-            select count(1) from user where name=#{name} and id!=#{id};
+            select count(1) from user where username=#{name} and id!=#{id};
         </select>
     <insert id="insert" parameterType="com.centling.domain.User">
         INSERT into user (userName,passWord,email,createdTime) values(#{userName},#{passWord},#{email},#{createdTime})
     </insert>
+    <select id="selectByNameAndPassWord" parameterType="com.centling.domain.User" resultType="java.lang.Integer">
+        select count(1) from user where userName=#{userName} and passWord=#{passWord}
+    </select>
+    <select id="selectStatusByName" parameterType="java.lang.String" resultType="com.centling.domain.User">
+        select * from user where userName=#{userName}
+    </select>
 </mapper>

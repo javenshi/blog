@@ -55,12 +55,12 @@ public class User {
         this.integral = integral;
     }
 
-    public int getUserstatus() {
-        return userstatus;
+    public int getStatus() {
+        return status;
     }
 
-    public void setUserstatus(int userstatus) {
-        this.userstatus = userstatus;
+    public void setStatus(int userstatus) {
+        this.status = userstatus;
     }
 
     public long getCreatedTime() {

@@ -2,6 +2,7 @@
 package com.centling.security;
 
 
+import com.centling.mapper.blog.UserMapper;
 import com.centling.utils.exception.ApplicationErrorEnum;
 import com.centling.utils.exception.Preconditions;
 import com.google.common.base.Splitter;
@@ -16,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -33,17 +35,18 @@ public class UserDetailsService implements org.springframework.security.core.use
 
     private final Logger log = LoggerFactory.getLogger(UserDetailsService.class);
 
+    @Autowired
+    UserMapper userMapper;
 
 
+    public UserDetails loadUserByUsername(final String name) {
 
-   public UserDetails loadUserByUsername(final String name) {
-       List<GrantedAuthority> grantedAuthorities=null;
-       //XXX:添加默认角色，防止出现未设置任何角色情况下,出现A granted authority textual representation is required错误
-       grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_DEFAULT"));
-       TokenUser tokenUser = new TokenUser(name, "", grantedAuthorities);
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        grantedAuthorities.add(new SimpleGrantedAuthority("USER"));
+        TokenUser tokenUser = new TokenUser(name, userMapper.selectStatusByName(name).getPassWord(), grantedAuthorities);
 
-       return tokenUser;
-   }
+        return tokenUser;
+    }
 /*
   if(log.isDebugEnabled()){
             log.debug("Authenticating:[用户名:{}]", name);
@@ -84,9 +87,9 @@ public class UserDetailsService implements org.springframework.security.core.use
 
     }*/
 
-   /* private Set<String> getAuthoritiesByUserId(Integer id){
+    /* private Set<String> getAuthoritiesByUserId(Integer id){
 
-*//*   SUser sUser = this.getCurrentUserByUserId(id);
+     *//*   SUser sUser = this.getCurrentUserByUserId(id);
         Preconditions.checkArgument(!Strings.isNullOrEmpty(sUser.getRoleIds()), ApplicationErrorEnum.USER_NOT_HAVE_ANY_ROLES);
         List<Integer> roleValidIds = this.getValidRoleIds(sUser.getRoleIds());
         Preconditions.checkArgument(roleValidIds.size() > 0,ApplicationErrorEnum.USER_NOT_HAVE_ANY_VALID_ROLES);
@@ -108,10 +111,10 @@ public class UserDetailsService implements org.springframework.security.core.use
     }
 
    *//*
-*//* private List<Integer> getValidRoleIds(String roleIdStr){
+     *//* private List<Integer> getValidRoleIds(String roleIdStr){
      *//**//*
-*//*
-*//*   List<Integer> roleIds = Splitter
+     *//*
+     *//*   List<Integer> roleIds = Splitter
                 .on(",")
                 .trimResults()
                 .omitEmptyStrings()
@@ -134,13 +137,13 @@ public class UserDetailsService implements org.springframework.security.core.use
                 .stream()
                 .filter(value-> allVialdRoleIds.contains(value))
                 .collect(toList());*//**//*
-*//*
-*//*
+     *//*
+     *//*
     }*//**//*
 
 
-  *//*
-*//*  private SUser getCurrentUserByUserId(Integer userId){
+     *//*
+     *//*  private SUser getCurrentUserByUserId(Integer userId){
         SUser sUser = sUserMapper.selectByPrimaryKey(userId);
         Preconditions.checkNotNull(sUser, ApplicationErrorEnum.USER_NOT_FOUND);
         return sUser;
@@ -148,5 +151,6 @@ public class UserDetailsService implements org.springframework.security.core.use
 
 
 
-*//*
-*/}
+     *//*
+     */
+}

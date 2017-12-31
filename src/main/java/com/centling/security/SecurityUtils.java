@@ -4,6 +4,8 @@ import java.util.Collection;
 
 
 import com.centling.domain.User;
+import com.centling.mapper.blog.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -44,13 +46,13 @@ public final class SecurityUtils {
         return userName;
     }
     
-    public static User getCurrentUser() {
+    public static String getCurrentUser() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
-        User tokenUser = null;
+        String tokenUser = null;
         if (authentication != null) {
             if (authentication.getPrincipal() instanceof TokenUser) {
-                tokenUser = ((User)authentication.getPrincipal());
+                tokenUser= ((TokenUser) authentication.getPrincipal()).getUsername();
             }
         }
         return tokenUser;

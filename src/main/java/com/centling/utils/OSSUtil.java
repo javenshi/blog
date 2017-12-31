@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class OSSUtil {
@@ -72,12 +73,14 @@ public class OSSUtil {
     /**
      * 上传文件
      */
-    public String uploadToOSS(OSSClient ossClient,  String Name, MultipartFile file) {
+    public String uploadToOSS(OSSClient ossClient,String Folder, MultipartFile file) {
+        String fileFullName = file.getOriginalFilename();
+        String imageSuffix=fileFullName.substring(fileFullName.lastIndexOf(".")+1);
+        String uuid = UUID.randomUUID().toString().replaceAll("-","");
+        String Name=uuid+"."+imageSuffix;
 
-        String key = null;
         try {
             InputStream is = file.getInputStream();
-
             Long fileSize = file.getSize();
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(is.available());
@@ -85,12 +88,13 @@ public class OSSUtil {
             metadata.setHeader("Pragma", "no-cache");
             metadata.setContentEncoding("utf-8");
             metadata.setContentDisposition("filename/filesize=" + Name + "/" + fileSize + "Byte.");
-            PutObjectResult putResult = ossClient.putObject(bucket_name,  Name, is, metadata);
-            key = bucket_name + ","  + Name;
+            createFolder(ossClient,bucket_name,Folder);
+            PutObjectResult putResult = ossClient.putObject(bucket_name, Folder+Name, is, metadata);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return key;
+        Date expiration = new Date(new Date().getTime() + new Date().getTime());
+        return   ossClient.generatePresignedUrl(bucket_name, Folder+Name, expiration).toString();
     }
 
  /*   *//**
