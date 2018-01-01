@@ -2,6 +2,7 @@ package com.centling.controller.blog;
 
 import com.centling.controller.LoginUserDto;
 import com.centling.domain.User;
+import com.centling.security.SecurityUtils;
 import com.centling.service.UserService;
 import com.centling.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import java.util.Properties;
 
@@ -22,6 +25,7 @@ public class UserController {
 
     @PostMapping(value = "/login")
     public Result login(@RequestBody User user) {
+
        return userService.login(user);
     }
     @GetMapping(value = "/cheackName/{name}")
@@ -32,6 +36,13 @@ public class UserController {
     public Result insert(@RequestBody User user) {
         userService.insert(user);
         return new Result(200,"注册成功");
+    }
+    @PostMapping(value = "/valUser")
+    public Result insert1(@RequestBody String name) {
+       if(name.equals(SecurityUtils.getCurrentUser())){
+           return new Result();
+       }
+       return new Result(202,"");
     }
 
     @PostMapping(value = "/sendEmail")

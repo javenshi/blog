@@ -36,7 +36,7 @@ public class TokenProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final String TOKEN_USER_KEY = "token_user";
     private static final String TOKEN_USER_ID_KEY = "token_user_id";
-
+    private static final String TEMPORARY_SCHEMA = "temporary_schema";//setSchema
     private String secretKey;
 
     private long tokenValidityInSeconds;
@@ -75,6 +75,7 @@ public class TokenProvider {
             .setSubject(authentication.getName())
             .claim(AUTHORITIES_KEY, authorities)
            // .claim(TOKEN_USER_KEY, json)
+                .claim(TEMPORARY_SCHEMA,tokenUser.getUserName())
             .claim(TOKEN_USER_ID_KEY, tokenUser.getUserId())
             .signWith(SignatureAlgorithm.HS512, secretKey)
             .setExpiration(validity)

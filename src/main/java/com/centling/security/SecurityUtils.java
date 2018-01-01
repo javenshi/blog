@@ -52,12 +52,20 @@ public final class SecurityUtils {
         String tokenUser = null;
         if (authentication != null) {
             if (authentication.getPrincipal() instanceof TokenUser) {
-                tokenUser= ((TokenUser) authentication.getPrincipal()).getUsername();
+                tokenUser= ((TokenUser) authentication.getPrincipal()).getUserName();
             }
         }
         return tokenUser;
     }
-
+    public static void setUserName(String temporary){
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        if (authentication != null) {
+            if (authentication.getPrincipal() instanceof TokenUser) {
+                ((TokenUser) authentication.getPrincipal()).setUserName(temporary);
+            }
+        }
+    }
     /***
      * 通过token获得当前的userId
      * @return

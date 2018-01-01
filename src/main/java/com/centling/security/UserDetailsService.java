@@ -43,8 +43,9 @@ public class UserDetailsService implements org.springframework.security.core.use
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("USER"));
-        TokenUser tokenUser = new TokenUser(name, userMapper.selectStatusByName(name).getPassWord(), grantedAuthorities);
-
+        com.centling.domain.User user= userMapper.selectStatusByName(name);
+        TokenUser tokenUser = new TokenUser(name,user.getPassWord(), grantedAuthorities);
+        tokenUser.setUserName(user.getUserName());
         return tokenUser;
     }
 /*

@@ -21,7 +21,8 @@ public class TokenUser extends User {
 	private Integer userId = null;
 	
 	private User user = null;
-	
+	private String userName = null;
+
 	public Integer getUserId() {
 		return userId;
 	}
@@ -39,4 +40,12 @@ public class TokenUser extends User {
 	}
 
 
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 }

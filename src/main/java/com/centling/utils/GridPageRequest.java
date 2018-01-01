@@ -15,6 +15,10 @@
 package com.centling.utils;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,9 +63,28 @@ public class GridPageRequest implements Serializable{
 		this.searchMap = searchMap;
 	}
 
-	public List<GridFilterInfo> getFilterList() {
-		
-		return filterList;
+	public Map getFilterList() {
+		Map map = new HashMap();
+		filterList.stream().forEach(gridFilterInfo -> {//封装筛选条件
+			if (gridFilterInfo.getFilterKey() != null && gridFilterInfo.getFilterValue() != null) {
+				String filterValue = gridFilterInfo.getFilterValue();
+				Long timeValue = 0L;
+				if (gridFilterInfo.getFilterKey().toLowerCase().contains("time")) {
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					Date date = null;
+					try {
+						date = simpleDateFormat.parse(filterValue);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					timeValue = date.getTime();
+					filterValue = timeValue.toString();
+				}
+				map.put(gridFilterInfo.getFilterKey(), filterValue);
+			}
+		});
+
+		return map;
 	}
 	
 	public void setFilterList(List<GridFilterInfo> filterList) {

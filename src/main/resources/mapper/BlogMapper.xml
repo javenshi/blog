@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.centling.mapper.blog.BlogsMapper">
+
+    <insert id="insert" parameterType="com.centling.domain.Blogs">
+
+            INSERT INTO blogs (id,blogsName,blogsStatus,blogsDate,blogsClassifyId,blogsClassifyName,userId,userName
+            ,createdTime) values (#{id},#{blogsName},#{blogsStatus},#{blogsDate},#{blogsClassifyId},#{blogsClassifyName},#{userId},#{userName},
+            #{createdTime})
+    </insert>
+    <select id="seletcClassifyById" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select blogsClassifyName from blogsclassify where blogsClassifyId=#{id}
+        </select>
+    <select id="selectPage" parameterType="java.util.Map" resultType="com.centling.domain.Blogs">
+        select * from blogs where 1=1
+        <if test="blogsStatus!=null">
+            and blogsStatus=#{blogsStatus}
+        </if>
+        <if test="status!=null">
+            and status=#{status}
+        </if>
+        <if test="select!=null">
+            and blogsName like concat('%',#{select},'%')
+            or blogsClassifyName like concat('%',#{select},'%')
+            or userName like concat('%',#{select},'%')
+        </if>
+        ORDER BY blogsDate desc
+    </select>
+    <select id="getBlogsById" parameterType="java.lang.String" resultType="com.centling.domain.Blogs">
+        select * from blogs where id=#{id}
+    </select>
+    <update id="addClick" parameterType="java.lang.String">
+       UPDATE blogs set blogsClick=blogsClick+1 where id=#{id};
+       UPDATE blogsclassify set blogsClassifyClick=blogsClassifyClick+1 where blogsClassifyId= (select blogsClassifyId from blogs where id=#{id})
+    </update>
+    <update id="passBlog">
+       UPDATE blogs set status=#{status} where id=#{id};
+    </update>
+
+
+</mapper>
