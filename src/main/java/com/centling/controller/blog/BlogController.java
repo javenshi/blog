@@ -1,6 +1,7 @@
 package com.centling.controller.blog;
 
 import com.centling.domain.Blogs;
+import com.centling.domain.Comments;
 import com.centling.service.BlogsService;
 import com.centling.utils.GridPageRequest;
 import com.centling.utils.Result;
@@ -17,6 +18,10 @@ public class BlogController {
     public Result insert(@RequestBody Blogs blogs){
         return blogsService.insert(blogs);
     }
+    @RequestMapping(value = "/saveComents",method= RequestMethod.POST)
+    public Result saveComents(@RequestBody Comments comments){
+        return blogsService.saveComents(comments);
+    }
     @PostMapping(value = "/page")
     public Result selectPage(@RequestBody GridPageRequest gridPageRequest){
         return new Result(blogsService.selectPage(gridPageRequest));
@@ -28,5 +33,9 @@ public class BlogController {
     @PostMapping(value = "/passBlog/{id}")
     public Result passBlog(@RequestBody Integer status,@PathVariable String id){
         return blogsService.passBlog(status,id);
+    }
+    @PostMapping(value = "/getComentsList/{size}")
+    public Result getComentsList(@RequestBody Comments comments,@PathVariable Integer seze){
+        return blogsService.getComentsList(comments,seze);
     }
 }

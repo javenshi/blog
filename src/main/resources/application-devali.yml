@@ -19,12 +19,14 @@ spring:
     initialSize: 1
     maxWait: 60000
     minIdle: 1
-    timeBetweenEvictionRunsMillis: 60000
+    timeBetweenEvictionRunsMillis: 50000
     minEvictableIdleTimeMillis: 300000
     validationQuery: select 1
+    removeAbandoned: true
+    numTestsPerEvictionRun: 20
     testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
+    testOnBorrow: true
+    testOnReturn: true
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
   mvc:

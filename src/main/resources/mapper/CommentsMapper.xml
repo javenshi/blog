@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.centling.mapper.blog.CommentsMapper">
+
+
+
+    <insert id="insert" parameterType="com.centling.domain.Comments">
+
+            INSERT INTO comments (AnnouncementContext,creatTime,userId,UserName,blogId) values
+            (#{AnnouncementContext},#{creatTime},#{userId},#{UserName},#{blogId})
+    </insert>
+
+    <select id="selectPage" parameterType="java.util.Map" resultType="com.centling.domain.Comments">
+        select * from comments where 1=1
+        <if test="blogId!=null">
+            and blogId=#{blogId}
+        </if>
+        ORDER BY creatTime desc
+    </select>
+</mapper>

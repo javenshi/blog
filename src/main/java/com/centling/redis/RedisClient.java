@@ -46,7 +46,7 @@ public class RedisClient {
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxIdle(20);
         config.setMaxTotal(20);
-        config.setMaxWaitMillis(-1);
+        config.setMaxWaitMillis(102220000l);
         config.setTestOnBorrow(false);
         // slave链接
         List<JedisShardInfo> shards = new ArrayList<JedisShardInfo>();
@@ -56,10 +56,11 @@ public class RedisClient {
     }
 
     public String getStringKey(String key){
-        return jedis.get(key);
+         key=shardedJedis.get(key);
+        return key;
     }
     public void setStringKey(String key,String value){
-        jedis.set(key,value);
+        shardedJedis.set(key,value);
     }
     private void StringOperate() {
         System.out.println("======================String_1==========================");

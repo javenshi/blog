@@ -1,8 +1,10 @@
 package com.centling.service;
 
 import com.centling.domain.Blogs;
+import com.centling.domain.Comments;
 import com.centling.domain.User;
 import com.centling.mapper.blog.BlogsMapper;
+import com.centling.mapper.blog.CommentsMapper;
 import com.centling.mapper.blog.UserMapper;
 import com.centling.redis.RedisClient;
 import com.centling.security.SecurityUtils;
@@ -27,6 +29,8 @@ public class BlogsService {
     BlogsMapper blogsMapper;
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    CommentsMapper commentsMapper;
     @Autowired
     RedisClient redisClient;
 
@@ -65,5 +69,19 @@ public class BlogsService {
     public Result passBlog(Integer status, String id) {
         blogsMapper.passBlog(status, id);
         return  new Result();
+    }
+
+    public Result saveComents(Comments comments) {
+        commentsMapper.insert(comments);
+        return new Result();
+    }
+
+    public Result getComentsList(Comments comments, Integer seze) {
+        Map map=new HashMap();
+        map.put("blogId",comments.getBlogId());
+        PageHelper.startPage(1, seze, "");
+        List<Comments> list= commentsMapper.selectPage(map);
+        PageInfo<Comments> pageInfo = new PageInfo<>(list);
+      return new Result(pageInfo);
     }
 }
