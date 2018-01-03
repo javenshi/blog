@@ -1,16 +1,11 @@
 package com.centling.controller.blog;
 
-import com.aliyun.oss.OSSClient;
 import com.centling.domain.Blogs;
 import com.centling.service.BlogsService;
 import com.centling.utils.GridPageRequest;
 import com.centling.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/blog")

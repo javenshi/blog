@@ -4,10 +4,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.*;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 @Component
 @Scope("singleton")
 public class RedisClient {
@@ -307,7 +305,15 @@ public class RedisClient {
         System.out.println("查看zset集合中element004的权重："+shardedJedis.zscore("zset", "element004"));
         System.out.println("查看下标1到2范围内的元素值："+shardedJedis.zrange("zset", 1, 2));
     }
-
+    public void setHashComments(String id,String userName,String comments){
+        shardedJedis.hset(id,userName,comments);
+    }
+    public  Map<String,Object> getCommentsByBlogId(String id){
+        Map<String,Object> map=new HashMap();
+        map.put("key",shardedJedis.hkeys(id));
+        map.put("value",shardedJedis.hvals(id));
+        return map;
+    }
     private void HashOperate() {
         System.out.println("======================hash==========================");
         //清空数据
