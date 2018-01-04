@@ -10,4 +10,6 @@ public interface CarouselMapper {
     void insert(String url);
 
     void deleteById(Integer id);
+
+    int selectTimeOut();
 }

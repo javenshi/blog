@@ -10,5 +10,8 @@
     <update id="deleteById" parameterType="java.lang.String">
             update carousel set delete_flag=1 where id=#{id}
         </update>
+    <select id="selectTimeOut" resultType="java.lang.Integer">
+            SELECT 1
+        </select>
 
 </mapper>

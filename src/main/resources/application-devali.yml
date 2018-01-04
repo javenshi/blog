@@ -9,7 +9,7 @@ mysql:
 spring:
   datasource:
     name: test
-    url: jdbc:mysql://${mysql.host}:${mysql.port}/blog?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true
+    url: jdbc:mysql://${mysql.host}:${mysql.port}/blog?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true&failOverReadOnly=false
     username: root
     password: caodan000..
     type: com.alibaba.druid.pool.DruidDataSource
