@@ -6,8 +6,8 @@
 
     <insert id="insert" parameterType="com.centling.domain.Comments">
 
-            INSERT INTO comments (AnnouncementContext,creatTime,userId,UserName,blogId) values
-            (#{AnnouncementContext},#{creatTime},#{userId},#{UserName},#{blogId})
+            INSERT INTO comments (context,creatTime,userId,userName,blogId) values
+            (#{context},#{creatTime},#{userId},#{userName},#{blogId})
     </insert>
 
     <select id="selectPage" parameterType="java.util.Map" resultType="com.centling.domain.Comments">

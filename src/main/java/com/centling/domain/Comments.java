@@ -2,10 +2,10 @@ package com.centling.domain;
 
 public class Comments {
     private int id;
-    private String AnnouncementContext;
+    private String context;
     private long creatTime;
     private int userId;
-    private String UserName;
+    private String userName;
     private String blogId;
 
     public int getId() {
@@ -16,12 +16,12 @@ public class Comments {
         this.id = id;
     }
 
-    public String getAnnouncementContext() {
-        return AnnouncementContext;
+    public String getContext() {
+        return context;
     }
 
-    public void setAnnouncementContext(String announcementContext) {
-        AnnouncementContext = announcementContext;
+    public void setContext(String context) {
+        this.context = context;
     }
 
     public long getCreatTime() {
@@ -41,11 +41,11 @@ public class Comments {
     }
 
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
     public void setUserName(String userName) {
-        UserName = userName;
+        this.userName = userName;
     }
 
     public String getBlogId() {

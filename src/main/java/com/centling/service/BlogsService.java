@@ -72,6 +72,7 @@ public class BlogsService {
     }
 
     public Result saveComents(Comments comments) {
+        comments.setCreatTime(System.currentTimeMillis());
         commentsMapper.insert(comments);
         return new Result();
     }

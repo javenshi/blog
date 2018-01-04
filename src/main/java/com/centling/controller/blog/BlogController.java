@@ -35,7 +35,7 @@ public class BlogController {
         return blogsService.passBlog(status,id);
     }
     @PostMapping(value = "/getComentsList/{size}")
-    public Result getComentsList(@RequestBody Comments comments,@PathVariable Integer seze){
-        return blogsService.getComentsList(comments,seze);
+    public Result getComentsList(@RequestBody Comments comments,@PathVariable Integer size){
+        return blogsService.getComentsList(comments,size);
     }
 }
