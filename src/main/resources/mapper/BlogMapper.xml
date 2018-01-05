@@ -19,6 +19,9 @@
         <if test="status!=null">
             and status=#{status}
         </if>
+        <if test="userId!=null">
+            and userId=#{userId}
+        </if>
         <if test="select!=null">
             and blogsName like concat('%',#{select},'%')
             or blogsClassifyName like concat('%',#{select},'%')
@@ -35,6 +38,11 @@
     </update>
     <update id="passBlog">
        UPDATE blogs set status=#{status} where id=#{id};
+    </update>
+    <update id="updateBlogs" parameterType="com.centling.domain.Blogs">
+       UPDATE blogs set status=#{status},blogsName=#{blogsName},blogsStatus=#{blogsStatus},
+       blogsDate=#{blogsDate},blogsClassifyId=#{blogsClassifyId},
+       blogsClassifyName=#{blogsClassifyName} where id=#{id};
     </update>
 
 

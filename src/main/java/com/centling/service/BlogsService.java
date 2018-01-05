@@ -38,10 +38,17 @@ public class BlogsService {
        String ClassifyName= blogsMapper.seletcClassifyById(blogs.getBlogsClassifyId());
         blogs.setBlogsClassifyName(ClassifyName);
         User u=userMapper.selectStatusByName(blogs.getUserName());
-        String uuid= UUID.randomUUID().toString();
-        redisClient.setStringKey(uuid,blogs.getBlogsUrl());
-        blogs.setBlogs(uuid,u);
-        blogsMapper.insert(blogs);
+        if(blogs.getId()!=null){
+            redisClient.setStringKey(blogs.getId(),blogs.getBlogsUrl());
+            blogs.setBlogsUrl("");
+            blogs.setBlogsDate(System.currentTimeMillis());
+            blogsMapper.updateBlogs(blogs);
+        }else{
+            String uuid= UUID.randomUUID().toString();
+            redisClient.setStringKey(uuid,blogs.getBlogsUrl());
+            blogs.setBlogs(uuid,u);
+            blogsMapper.insert(blogs);
+        }
         return new Result();
     }
     public GridReturnData<Blogs> selectPage(GridPageRequest gridPageRequest) {

@@ -9,7 +9,7 @@ mysql:
 spring:
   datasource:
     name: test
-    url: jdbc:mysql://${mysql.host}:${mysql.port}/blog?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true&failOverReadOnly=false
+    url: jdbc:mysql://${mysql.host}:${mysql.port}/blog?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true
     username: root
     password: caodan000..
     type: com.alibaba.druid.pool.DruidDataSource
@@ -19,14 +19,12 @@ spring:
     initialSize: 1
     maxWait: 60000
     minIdle: 1
-    timeBetweenEvictionRunsMillis: 50000
+    timeBetweenEvictionRunsMillis: 60000
     minEvictableIdleTimeMillis: 300000
-    validationQuery: select 1
-    removeAbandoned: true
-    numTestsPerEvictionRun: 20
+    validationQuery: select 'x'
     testWhileIdle: true
-    testOnBorrow: true
-    testOnReturn: true
+    testOnBorrow: false
+    testOnReturn: false
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
   mvc:

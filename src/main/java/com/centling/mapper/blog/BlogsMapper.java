@@ -18,4 +18,6 @@ public interface BlogsMapper {
     void addClick(String id);
 
     void passBlog(@Param("status") Integer status, @Param("id") String id);
+
+    void updateBlogs(Blogs blogs);
 }

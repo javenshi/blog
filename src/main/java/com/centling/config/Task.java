@@ -1,3 +1,4 @@
+/*
 package com.centling.config;
 
 import com.centling.mapper.blog.admin.CarouselMapper;
@@ -15,3 +16,4 @@ public class Task {
     }
 
 }
+*/
