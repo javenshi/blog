@@ -37,10 +37,18 @@ public class ResouceService {
 
     public Result getResouceList(Resouce resouce, Integer seze) {
         Map map=new HashMap();
+        if(resouce.getResouceName()!=null)
         map.put("resouceName",resouce.getResouceName());
+        if(resouce.getStatus()<3)
+        map.put("status",resouce.getStatus());
         PageHelper.startPage(1, seze, "");
         List<Resouce> list= resouceMapper.selectPage(map);
         PageInfo<Resouce> pageInfo = new PageInfo<>(list);
       return new Result(pageInfo);
+    }
+
+    public Result passResourc(Integer status, String id) {
+        resouceMapper.passResourc(status,id);
+        return new Result();
     }
 }

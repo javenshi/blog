@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.centling.mapper.blog.NoticeMapper">
+
+
+
+    <insert id="insert" parameterType="com.centling.domain.Notice">
+            INSERT INTO notice (name,creatTime,context) values
+            (#{name},#{creatTime},#{context})
+    </insert>
+
+    <select id="selectPage"  resultType="com.centling.domain.Notice">
+        select * from notice where 1=1
+
+        ORDER BY creatTime desc
+    </select>
+
+</mapper>

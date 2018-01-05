@@ -14,6 +14,12 @@
         <if test="resouceName!=null">
             and resouceName like concat('%',#{resouceName},'%')
         </if>
+        <if test="status!=null">
+            and status= #{status}
+        </if>
         ORDER BY creatTime desc
     </select>
+    <update id="passResourc">
+        UPDATE resource set status=#{status} where id=#{id};
+    </update>
 </mapper>

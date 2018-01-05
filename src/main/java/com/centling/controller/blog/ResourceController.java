@@ -20,4 +20,8 @@ public class ResourceController {
     public Result saveResouce(@RequestBody Resouce comments){
         return resouceService.saveResouce(comments);
     }
+    @PostMapping(value = "/passResourc/{id}")
+    public Result passResourc(@RequestBody Integer status,@PathVariable String id){
+        return resouceService.passResourc(status,id);
+    }
 }
