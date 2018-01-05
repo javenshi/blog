@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.centling.mapper.blog.ProposalMapper">
+
+
+
+    <insert id="insert" parameterType="com.centling.domain.Proposal">
+            INSERT INTO proposal (userId,userName,creatTime,context) values
+            (#{userId},#{userName},#{creatTime},#{context})
+    </insert>
+
+    <select id="selectPage" parameterType="java.util.Map" resultType="com.centling.domain.Proposal">
+        select * from proposal where 1=1
+
+        ORDER BY creatTime desc
+    </select>
+
+    <update id="update" parameterType="com.centling.domain.Proposal">
+        UPDATE proposal set answer=#{answer} where id=#{id};
+    </update>
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM proposal where id=#{id};
+    </delete>
+</mapper>
