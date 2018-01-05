@@ -46,9 +46,33 @@ public class ResouceService {
         PageInfo<Resouce> pageInfo = new PageInfo<>(list);
       return new Result(pageInfo);
     }
+    public Result getResouceList(GridPageRequest gridPageRequest) {
+        GridReturnData<Resouce> mGridReturnData = new GridReturnData<>();
+        Map map= gridPageRequest.getFilterList();
+        map.put("searchKey", gridPageRequest.getSearchKey());
+        String sortMyBatisByString = gridPageRequest.getSortMybatisString();
+        PageHelper.startPage(gridPageRequest.getPageNum(), gridPageRequest.getPageSize(), "");
+        List<Resouce> list= resouceMapper.selectPage(map);
+        PageInfo<Resouce> pageInfo = new PageInfo<>(list);
+        mGridReturnData.setPageInfo(pageInfo);
+        return new Result(mGridReturnData);
+
+    }
 
     public Result passResourc(Integer status, String id) {
         resouceMapper.passResourc(status,id);
+        return new Result();
+    }
+
+    public Result updateRes(Resouce comments) {
+        comments.setCreatTime(System.currentTimeMillis());
+        resouceMapper.updateRes(comments);
+
+        return new Result();
+    }
+
+    public Result deleteRe(Integer id) {
+        resouceMapper.deleteRe(id);
         return new Result();
     }
 }

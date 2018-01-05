@@ -34,6 +34,10 @@ public class BlogController {
     public Result passBlog(@RequestBody Integer status,@PathVariable String id){
         return blogsService.passBlog(status,id);
     }
+    @PostMapping(value = "/deleteBlog/{id}")
+    public Result deleteBlog(@PathVariable String id){
+        return blogsService.deleteBlog(id);
+    }
     @PostMapping(value = "/getComentsList/{size}")
     public Result getComentsList(@RequestBody Comments comments,@PathVariable Integer size){
         return blogsService.getComentsList(comments,size);

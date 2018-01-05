@@ -11,4 +11,8 @@ public interface ResouceMapper {
      void insert(Resouce resouce);
      List<Resouce> selectPage(Map map);
     void passResourc(@Param("status") Integer status, @Param("id") String id);
+
+    void updateRes(Resouce comments);
+
+    void deleteRe(Integer id);
 }

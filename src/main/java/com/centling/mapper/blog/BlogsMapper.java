@@ -20,4 +20,6 @@ public interface BlogsMapper {
     void passBlog(@Param("status") Integer status, @Param("id") String id);
 
     void updateBlogs(Blogs blogs);
+
+    void deleteBlog(String id);
 }

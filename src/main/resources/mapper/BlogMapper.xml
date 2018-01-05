@@ -39,6 +39,9 @@
     <update id="passBlog">
        UPDATE blogs set status=#{status} where id=#{id};
     </update>
+    <delete id="deleteBlog" parameterType="java.lang.String">
+       DELETE FROM blogs  where id=#{id};
+    </delete>
     <update id="updateBlogs" parameterType="com.centling.domain.Blogs">
        UPDATE blogs set status=#{status},blogsName=#{blogsName},blogsStatus=#{blogsStatus},
        blogsDate=#{blogsDate},blogsClassifyId=#{blogsClassifyId},

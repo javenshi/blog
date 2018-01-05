@@ -92,4 +92,9 @@ public class BlogsService {
         PageInfo<Comments> pageInfo = new PageInfo<>(list);
       return new Result(pageInfo);
     }
+
+    public Result deleteBlog(String id) {
+        blogsMapper.deleteBlog(id);
+        return new Result();
+    }
 }

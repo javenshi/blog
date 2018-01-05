@@ -17,9 +17,19 @@
         <if test="status!=null">
             and status= #{status}
         </if>
+        <if test="userId!=null">
+            and userId= #{userId}
+        </if>
         ORDER BY creatTime desc
     </select>
     <update id="passResourc">
         UPDATE resource set status=#{status} where id=#{id};
     </update>
+    <update id="updateRes" parameterType="com.centling.domain.Resouce">
+        UPDATE resource set resouceName=#{resouceName},resouceUrl=#{resouceUrl},
+        creatTime=#{creatTime},context=#{context} where id=#{id};
+    </update>
+    <delete id="deleteRe" parameterType="java.lang.Integer">
+        DELETE FROM resource where id=#{id};
+    </delete>
 </mapper>
