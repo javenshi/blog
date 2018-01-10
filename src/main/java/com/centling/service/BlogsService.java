@@ -6,9 +6,8 @@ import com.centling.domain.User;
 import com.centling.mapper.blog.BlogsMapper;
 import com.centling.mapper.blog.CommentsMapper;
 import com.centling.mapper.blog.UserMapper;
+
 import com.centling.redis.RedisClient;
-import com.centling.security.SecurityUtils;
-import com.centling.utils.GridFilterInfo;
 import com.centling.utils.GridPageRequest;
 import com.centling.utils.GridReturnData;
 import com.centling.utils.Result;
@@ -17,10 +16,6 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service

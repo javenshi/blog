@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Order(1)
 public class GlobalLogAspectConfiguration {
 
-    @Around("execution (* com.centling.controller.*.*(..))")
+    @Around("execution (* com.centling.service.*.*(..))")
     public Object globalLogBack(ProceedingJoinPoint pjp) throws Throwable {
         Object obj = new Object();
         Throwable ex = null;

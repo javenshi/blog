@@ -5,14 +5,15 @@
     <insert id="insert" parameterType="com.centling.domain.Blogs">
 
             INSERT INTO blogs (id,blogsName,blogsStatus,blogsDate,blogsClassifyId,blogsClassifyName,userId,userName
-            ,createdTime) values (#{id},#{blogsName},#{blogsStatus},#{blogsDate},#{blogsClassifyId},#{blogsClassifyName},#{userId},#{userName},
-            #{createdTime})
+            ,createdTime,blogsPart,blogsUrl) values (#{id},#{blogsName},#{blogsStatus},#{blogsDate},#{blogsClassifyId},#{blogsClassifyName},#{userId},#{userName},
+            #{createdTime},#{blogsPart},#{blogsUrl})
     </insert>
     <select id="seletcClassifyById" parameterType="java.lang.Integer" resultType="java.lang.String">
         select blogsClassifyName from blogsclassify where blogsClassifyId=#{id}
         </select>
     <select id="selectPage" parameterType="java.util.Map" resultType="com.centling.domain.Blogs">
-        select * from blogs where 1=1
+        select id,blogsName,blogsStatus,blogsDate,blogsClassifyId,blogsClassifyName,userId,userName
+        ,createdTime,blogsPart  from blogs where 1=1
         <if test="blogsStatus!=null">
             and blogsStatus=#{blogsStatus}
         </if>
@@ -30,7 +31,8 @@
         ORDER BY blogsDate desc
     </select>
     <select id="getBlogsById" parameterType="java.lang.String" resultType="com.centling.domain.Blogs">
-        select * from blogs where id=#{id}
+        select id,blogsName,blogsStatus,blogsDate,blogsClassifyId,blogsClassifyName,userId,userName
+        ,createdTime,blogsUrl from blogs where id=#{id}
     </select>
     <update id="addClick" parameterType="java.lang.String">
        UPDATE blogs set blogsClick=blogsClick+1 where id=#{id};
@@ -44,7 +46,7 @@
     </delete>
     <update id="updateBlogs" parameterType="com.centling.domain.Blogs">
        UPDATE blogs set status=#{status},blogsName=#{blogsName},blogsStatus=#{blogsStatus},
-       blogsDate=#{blogsDate},blogsClassifyId=#{blogsClassifyId},
+       blogsDate=#{blogsDate},blogsClassifyId=#{blogsClassifyId},blogsPart=#{blogsPart},
        blogsClassifyName=#{blogsClassifyName} where id=#{id};
     </update>
 

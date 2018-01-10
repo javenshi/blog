@@ -9,6 +9,7 @@ public class Blogs {
     private long  blogsDate	;
     private int blogsClassifyId	;
     private String  blogsClassifyName;
+    private String  blogsPart;
     private int userId;
     private int status;
     private String   userName;
@@ -31,6 +32,7 @@ public class Blogs {
         this.userId=user.getId();
         this.userName=user.getUserName();
         this.blogsUrl="";
+
     }
 
     public String getId() {
@@ -175,5 +177,13 @@ public class Blogs {
 
     public void setDeleteFlag(int deleteFlag) {
         this.deleteFlag = deleteFlag;
+    }
+
+    public String getBlogsPart() {
+        return blogsPart;
+    }
+
+    public void setBlogsPart(String blogsPart) {
+        this.blogsPart = blogsPart;
     }
 }
