@@ -63,6 +63,7 @@ public class BlogsService {
         if(blogs!=null){
             blogs.setBlogsUrl(redisClient.getStringKey(id));
             blogsMapper.addClick(id);
+            blogsMapper.addClassClick(id);
             redisClient.setZKey("<a href='/blog/read?id='"+id+">"+blogs.getUserName()+"</a>");
             return new Result(blogs);
         }

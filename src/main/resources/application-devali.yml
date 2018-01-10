@@ -8,43 +8,21 @@ mysql:
 
 spring:
   datasource:
-    name: test
-    url: jdbc:mysql://${mysql.host}:${mysql.port}/blog?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true
-    username: root
-    password: caodan000..
-    type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.jdbc.Driver
-    filters: stat
-    maxActive: 20
-    initialSize: 1
-    maxWait: 60000
-    minIdle: 1
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: select 'x'
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
-    maxOpenPreparedStatements: 20
+      url: jdbc:mysql://${mysql.host}:${mysql.port}/blog?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false
+      username: root
+      password: caodan000..
+  hikari:
+      data-source-properties:
+      cachePrepStmts: true
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+      useServerPrepStmts: true
   mvc:
     favicon:
       enabled: false
 
 
 
-kafka:
-  brokerAddress: 47.104.7.103:9092
-  #短信
-  smsTopic: testTopic
-  smsCosumeGroup: testTopicGroup
-
-  #定时任务
-  timerTaskTopic: timerTopic
-  timerTaskGroup: timerGroup
-
-  #云平台服务器tomcat数量
-  jvmNumbers: 1
 
 server:
     port: 8088

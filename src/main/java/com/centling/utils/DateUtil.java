@@ -53,7 +53,7 @@ public class DateUtil {
     public static final String DAY_END_STRING_HHMMSS = " 23:59:59";  
     private static SimpleDateFormat sdf_date_format = new SimpleDateFormat(DATE_FORMAT);  
     private static SimpleDateFormat sdf_hour_format = new SimpleDateFormat(HOUR_FORMAT);  
-    private static SimpleDateFormat sdf_datetime_format = new SimpleDateFormat(DATETIME_FORMAT);  
+    public static SimpleDateFormat sdf_datetime_format = new SimpleDateFormat(DATETIME_FORMAT);
       
   
     // ~ Methods  
