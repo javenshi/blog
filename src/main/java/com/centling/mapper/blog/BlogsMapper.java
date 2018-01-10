@@ -21,5 +21,5 @@ public interface BlogsMapper {
 
     void updateBlogs(Blogs blogs);
 
-    void deleteBlog(String id);
+    void deleteBlog(@Param("deleteTime") long time,@Param("id") String id);
 }

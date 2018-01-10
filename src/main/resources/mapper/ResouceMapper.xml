@@ -10,7 +10,7 @@
     </insert>
 
     <select id="selectPage" parameterType="java.util.Map" resultType="com.centling.domain.Resouce">
-        select * from resource where 1=1
+        select * from resource where  deleteFlag=0
         <if test="resouceName!=null">
             and resouceName like concat('%',#{resouceName},'%')
         </if>
@@ -29,7 +29,11 @@
         UPDATE resource set resouceName=#{resouceName},resouceUrl=#{resouceUrl},
         creatTime=#{creatTime},context=#{context} where id=#{id};
     </update>
-    <delete id="deleteRe" parameterType="java.lang.Integer">
-        DELETE FROM resource where id=#{id};
-    </delete>
+    <update id="deleteRe">
+        update resource set deleteFlag=1 ,delete=#{deleteTime} where id=#{id};
+    </update>
+
+    <update id="addClick" parameterType="java.lang.Integer">
+        UPDATE resource set resouceClick=resouceClick+1 where id=#{id};
+    </update>
 </mapper>

@@ -1,13 +1,8 @@
 package com.centling.service;
 
-import com.centling.domain.Blogs;
-import com.centling.domain.Comments;
+
 import com.centling.domain.Resouce;
-import com.centling.domain.User;
-import com.centling.mapper.blog.BlogsMapper;
-import com.centling.mapper.blog.CommentsMapper;
 import com.centling.mapper.blog.ResouceMapper;
-import com.centling.mapper.blog.UserMapper;
 import com.centling.redis.RedisClient;
 import com.centling.utils.GridPageRequest;
 import com.centling.utils.GridReturnData;
@@ -16,17 +11,16 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Service
 public class ResouceService {
     @Autowired
     ResouceMapper resouceMapper;
-
+    @Autowired
+    RedisClient redisClient;
 
 
     public Result saveResouce(Resouce resouce) {
@@ -37,11 +31,11 @@ public class ResouceService {
 
     public Result getResouceList(Resouce resouce, Integer seze) {
         Map map=new HashMap();
-        if(resouce.getResouceName()!=null)
+        if(resouce.getResouceName()!=null&&resouce.getResouceName()!="")
         map.put("resouceName",resouce.getResouceName());
         if(resouce.getStatus()<3)
         map.put("status",resouce.getStatus());
-        PageHelper.startPage(5, seze, "");
+        PageHelper.startPage(seze, 5, "");
         List<Resouce> list= resouceMapper.selectPage(map);
         PageInfo<Resouce> pageInfo = new PageInfo<>(list);
       return new Result(pageInfo);
@@ -72,7 +66,17 @@ public class ResouceService {
     }
 
     public Result deleteRe(Integer id) {
-        resouceMapper.deleteRe(id);
+        resouceMapper.deleteRe(System.currentTimeMillis(),id);
         return new Result();
+    }
+    public Result getResoucesById(Integer id,String name) {
+
+
+
+        resouceMapper.addClick(id);
+            redisClient.setZKey("<a href='/blog/read?id='"+id+">"+name+"</a>");
+            return new Result();
+
+
     }
 }

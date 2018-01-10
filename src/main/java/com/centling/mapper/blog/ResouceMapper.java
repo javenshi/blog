@@ -14,5 +14,7 @@ public interface ResouceMapper {
 
     void updateRes(Resouce comments);
 
-    void deleteRe(Integer id);
+    void deleteRe(@Param("deleteTime") long l, @Param("id") Integer id);
+
+    void addClick(Integer id);
 }

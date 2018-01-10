@@ -10,6 +10,7 @@ public class Resouce {
     private int status;
     private String userName;
     private String context;
+    private long  deleteTime;
 
     public int getId() {
         return id;
@@ -77,6 +78,14 @@ public class Resouce {
 
     public void setContext(String context) {
         this.context = context;
+    }
+
+    public long getDeleteTime() {
+        return deleteTime;
+    }
+
+    public void setDeleteTime(long deleteTime) {
+        this.deleteTime = deleteTime;
     }
 
     public void setUserName(String userName) {

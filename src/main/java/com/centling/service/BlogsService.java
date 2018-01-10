@@ -63,6 +63,7 @@ public class BlogsService {
         if(blogs!=null){
             blogs.setBlogsUrl(redisClient.getStringKey(id));
             blogsMapper.addClick(id);
+            redisClient.setZKey("<a href='/blog/read?id='"+id+">"+blogs.getUserName()+"</a>");
             return new Result(blogs);
         }
         return new Result(404,"");
@@ -89,7 +90,7 @@ public class BlogsService {
     }
 
     public Result deleteBlog(String id) {
-        blogsMapper.deleteBlog(id);
+        blogsMapper.deleteBlog(System.currentTimeMillis(),id);
         return new Result();
     }
 }
