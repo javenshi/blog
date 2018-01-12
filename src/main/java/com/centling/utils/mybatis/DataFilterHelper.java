@@ -1,3 +1,4 @@
+/*
 package com.centling.utils.mybatis;
 
 import org.apache.ibatis.executor.statement.StatementHandler;
@@ -7,9 +8,11 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Properties;
 
+*/
 /**
  * Created by lin on 17-9-6.
- */
+ *//*
+
 @Intercepts({@Signature(type = StatementHandler.class,method = "prepare",args = {Connection.class})})
 public class DataFilterHelper implements Interceptor {
     private String dataType;
@@ -44,3 +47,4 @@ public class DataFilterHelper implements Interceptor {
         SqlUtils.clearLocalFilter();
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.centling.utils.mybatis;
 
 import com.google.common.base.Joiner;
@@ -10,9 +11,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 
+*/
 /**
  * Created by lin on 17-9-6.
- */
+ *//*
+
 public class SqlUtils {
     private static final ThreadLocal<List<FilterEntity>> LOCAL_FILTER = new ThreadLocal();
 
@@ -122,3 +125,4 @@ public class SqlUtils {
         return  sql.substring(0,sql.length()-reset-"where".length());
     }
 }
+*/

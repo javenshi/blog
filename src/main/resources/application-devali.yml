@@ -70,9 +70,7 @@ application:
         appKey: ca3ab8093095a13fed492d6097c032f7
         keyWord: 智能公章
 
-    redis:
-        host: portal.aliyun-c1.centling.cn
-        port: 32550
+
 
 mybatis:
     type-handlers-package: org.apache.ibatis.type.LocalDateTypeHandler

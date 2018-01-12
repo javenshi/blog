@@ -1,3 +1,4 @@
+/*
 package com.centling.utils;
 
 import java.io.IOException;
@@ -25,37 +26,44 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.ClientAnchor.AnchorType;
 
 public class ExportExcelsUtil {
-	/**
+	*/
+/**
 	 * 
 	 * @param dataset 数据
 	 * @param out 流
-	 */
+	 *//*
+
 	public static <T> void exportExcel(Collection<T> dataset, OutputStream out) {
         exportExcel(0,0,0,"sheet1", null, dataset, out, "yyyy-MM-dd");
     }
 
-	/**
+	*/
+/**
 	 * 
 	 * @param headers 标题
 	 * @param dataset 数据
 	 * @param out
-	 */
+	 *//*
+
     public static <T> void exportExcel(String[] headers, Collection<T> dataset,OutputStream out) {
         exportExcel(0,0,0,"sheet1", headers, dataset, out, "yyyy-MM-dd");
     }
 
-    /**
+    */
+/**
      * 
      * @param headers 标题
      * @param dataset 数据
      * @param out 
      * @param pattern 日期格式
-     */
+     *//*
+
     public static <T> void exportExcel(String[] headers, Collection<T> dataset,OutputStream out, String pattern) {
         exportExcel(0,0,0,"sheet1", headers, dataset, out, pattern);
     }
     
-    /**
+    */
+/**
      * 导出数据
      * @param colSplit 需要冻结的列数目，如果没有传0
      * @param rowSplit 需要冻结的行数目，如果没有传0
@@ -64,12 +72,14 @@ public class ExportExcelsUtil {
      * @param headers 标题
      * @param dataset 数据
      * @param out 输出流
-     */
+     *//*
+
     public static <T> void exportExcel(int colSplit,int rowSplit,int dataBeginIndex,String sheetName,String[] headers, Collection<T> dataset,OutputStream out){
     	exportExcel(colSplit,rowSplit,dataBeginIndex,sheetName, headers, dataset, out, null);
     }
 
-    /**
+    */
+/**
      * 这是一个通用的方法，利用了JAVA的反射机制，可以将放置在JAVA集合中并且符号一定条件的数据以EXCEL 的形式输出到指定IO设备上
      * @param <T>
      * 
@@ -84,7 +94,8 @@ public class ExportExcelsUtil {
      *            与输出设备关联的流对象，可以将EXCEL文档导出到本地文件或者网络中
      * @param pattern
      *            如果有时间数据，设定输出格式。默认为"yyy-MM-dd"，目前不需要
-     */
+     *//*
+
     @SuppressWarnings("unchecked")
     public static <T> void exportExcel(int colSplit,int rowSplit,int dataBeginIndex,String title, String[] headers,Collection<T> dataset, OutputStream out, String pattern) {
     	// 声明一个工作薄
@@ -302,3 +313,4 @@ public class ExportExcelsUtil {
     }
 
 }
+*/

@@ -125,7 +125,7 @@
             <!-- </exclusion> -->
             <!-- </exclusions> -->
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>${springfox.version}</version>
@@ -135,7 +135,7 @@
                     <artifactId>mapstruct</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
@@ -217,11 +217,11 @@
         <!--</dependency> -->
 
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
-        <dependency>
+       <!-- <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>3.14</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>net.sf.json-lib</groupId>
@@ -242,11 +242,11 @@
             <artifactId>javassist</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>1.0.24</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -296,11 +296,11 @@
         </dependency>
 
         <!-- fel表达式引擎 -->
-        <dependency>
+      <!--  <dependency>
             <groupId>org.eweb4j</groupId>
             <artifactId>fel</artifactId>
             <version>0.8</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.googlecode.aviator</groupId>
             <artifactId>aviator</artifactId>
@@ -336,7 +336,7 @@
             <version>2.4.2</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-jdk8</artifactId>
             <version>${mapstruct.version}</version>
@@ -345,7 +345,7 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
             <version>${mapstruct.version}</version>
-        </dependency>
+        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
         <dependency>
@@ -369,7 +369,7 @@
         </dependency>
 
         <!-- openGPG start -->
-        <dependency>
+       <!-- <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
             <version>1.50</version>
@@ -378,14 +378,14 @@
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcpg-jdk15on</artifactId>
             <version>1.50</version>
-        </dependency>
+        </dependency>-->
         <!-- openGPG end -->
         <!-- Apache Thrift -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.apache.thrift</groupId>
             <artifactId>libthrift</artifactId>
             <version>0.10.0</version>
-        </dependency>
+        </dependency>-->
         <!-- https://mvnrepository.com/artifact/sshtools/j2ssh-core -->
         <dependency>
             <groupId>sshtools</groupId>
@@ -400,7 +400,7 @@
         </dependency>
 
         <!-- kafka -->
-        <dependency>
+       <!-- <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-integration</artifactId>
         </dependency>
@@ -412,7 +412,7 @@
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-bus</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- Mybatis Hazelcast-->
         <dependency>

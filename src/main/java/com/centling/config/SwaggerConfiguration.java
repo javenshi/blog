@@ -1,3 +1,4 @@
+/*
 package com.centling.config;
 
 import static springfox.documentation.builders.PathSelectors.regex;
@@ -18,13 +19,15 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+*/
 /**
  * Springfox Swagger configuration.
  *
  * Warning! When having a lot of REST endpoints, Springfox can become a performance issue. In that
  * case, you can use a specific Spring profile for this class, so that only front-end developers
  * have access to the Swagger view.
- */
+ *//*
+
 @Configuration
 @EnableSwagger2
 public class SwaggerConfiguration {
@@ -33,12 +36,14 @@ public class SwaggerConfiguration {
 
     public static final String DEFAULT_INCLUDE_PATTERN = "/api/.*";
 
-    /**
+    */
+/**
      * Swagger Springfox configuration.
      *
      * @param jHipsterProperties the properties of the application
      * @return the Swagger Springfox configuration
-     */
+     *//*
+
     @Bean
     public Docket swaggerSpringfoxDocket(ApplicationProperties properties) {
         log.debug("Starting Swagger");
@@ -75,3 +80,4 @@ public class SwaggerConfiguration {
         return docket;
     }
 }
+*/
