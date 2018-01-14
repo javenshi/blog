@@ -5,20 +5,37 @@
 
 
     <insert id="insert" parameterType="com.centling.domain.Proposal">
-            INSERT INTO proposal (userId,userName,creatTime,context) values
-            (#{userId},#{userName},#{creatTime},#{context})
+            INSERT INTO proposal (userId,userName,creatTime,context,blogId,pid,hasChild,toUserId,toUserName) values
+            (#{userId},#{userName},#{creatTime},#{context},#{blogId},#{pid},#{hasChild},#{toUserId},#{toUserName})
     </insert>
 
     <select id="selectPage" parameterType="java.util.Map" resultType="com.centling.domain.Proposal">
         select * from proposal where 1=1
-
+        <if test="noblog!=null">
+            and blogId is null
+        </if>
+        <if test="index!=null">
+            and pid =0
+        </if>
+        <if test="pid!=null">
+            and pid =#{pid}
+        </if>
         ORDER BY creatTime desc
+    </select>
+    <select id="selectById" parameterType="java.lang.Integer" resultType="com.centling.domain.Proposal">
+        select * from proposal where id=#{id}
+    </select>
+    <select id="selectByPId" parameterType="java.lang.Integer" resultType="com.centling.domain.Proposal">
+        select * from proposal where pid=#{id}  ORDER BY creatTime desc
     </select>
 
     <update id="update" parameterType="com.centling.domain.Proposal">
         UPDATE proposal set answer=#{answer} where id=#{id};
     </update>
+    <update id="addPro" parameterType="java.lang.Integer">
+        UPDATE proposal set hasChild=1 where id=#{id};
+    </update>
     <delete id="delete" parameterType="java.lang.Integer">
-        DELETE FROM proposal where id=#{id};
+        DELETE FROM proposal where id=#{id} or pid=#{id};
     </delete>
 </mapper>

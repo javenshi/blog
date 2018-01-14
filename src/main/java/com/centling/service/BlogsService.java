@@ -47,17 +47,14 @@ public class BlogsService {
         return new Result();
     }
     public GridReturnData<Blogs> selectPage(GridPageRequest gridPageRequest) {
-        System.err.println("1."+System.currentTimeMillis());
         GridReturnData<Blogs> mGridReturnData = new GridReturnData<>();
         Map map= gridPageRequest.getFilterList();
         map.put("searchKey", gridPageRequest.getSearchKey());
         String sortMyBatisByString = gridPageRequest.getSortMybatisString();
         PageHelper.startPage(gridPageRequest.getPageNum(), gridPageRequest.getPageSize(), sortMyBatisByString);
-        System.err.println("2."+System.currentTimeMillis());
         List<Blogs> list = blogsMapper.selectPage(map);
         PageInfo<Blogs> pageInfo = new PageInfo<>(list);
         mGridReturnData.setPageInfo(pageInfo);
-        System.err.println("3 ."+System.currentTimeMillis());
         return mGridReturnData;
     }
 

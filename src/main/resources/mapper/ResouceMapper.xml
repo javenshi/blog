@@ -30,7 +30,7 @@
         creatTime=#{creatTime},context=#{context} where id=#{id};
     </update>
     <update id="deleteRe">
-        update resource set deleteFlag=1 ,delete=#{deleteTime} where id=#{id};
+        update resource set deleteFlag=1 ,deleteTime=#{deleteTime} where id=#{id};
     </update>
 
     <update id="addClick" parameterType="java.lang.Integer">

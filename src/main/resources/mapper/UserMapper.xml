@@ -4,6 +4,9 @@
         <select id="selectByNameAndId" resultType="java.lang.Integer">
             select count(1) from user where username=#{name} and id!=#{id};
         </select>
+    <select id="selectById" parameterType="java.lang.Integer" resultType="com.centling.domain.User">
+            select * from user where id=#{id};
+        </select>
     <insert id="insert" parameterType="com.centling.domain.User">
         INSERT into user (userName,passWord,email,createdTime) values(#{userName},#{passWord},#{email},#{createdTime})
     </insert>

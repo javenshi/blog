@@ -4,19 +4,22 @@ import com.centling.domain.Proposal;
 import com.centling.domain.Resouce;
 import com.centling.service.ProposalService;
 import com.centling.service.ResouceService;
+import com.centling.utils.GridFilterInfo;
 import com.centling.utils.GridPageRequest;
 import com.centling.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/proposal")
 public class ProposalController {
     @Autowired
     ProposalService proposalService;
-    @PostMapping(value = "/getProposalList/{size}")
-    public Result getResouceList( @PathVariable Integer size){
-        return proposalService.getProposalList(size);
+    @PostMapping(value = "/getProposalList")
+    public Result getResouceList( @RequestBody GridPageRequest gridPageRequest){
+        return proposalService.getProposalList(gridPageRequest);
     }
     @PostMapping(value = "/update")
     public Result updateRes(@RequestBody Proposal comments){

@@ -10,4 +10,5 @@ public interface UserMapper {
     int selectByNameAndPassWord(User user);
 
     User selectStatusByName(String userName);
+    User selectById(int id);
 }
