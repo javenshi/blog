@@ -47,7 +47,7 @@ public class DatabaseConfiguration {
                 .build();
         return hikariDataSource;*/
         HikariConfig hikariConfig=new HikariConfig();
-        hikariConfig.setIdleTimeout(30000);
+        hikariConfig.setIdleTimeout(20000);
         hikariConfig.setMaxLifetime(30000);
         hikariConfig.setIdleTimeout(30000);
         hikariConfig.setConnectionTimeout(3000000);

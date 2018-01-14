@@ -35,7 +35,7 @@ public class ResouceService {
         map.put("resouceName",resouce.getResouceName());
         if(resouce.getStatus()<3)
         map.put("status",resouce.getStatus());
-        PageHelper.startPage(seze, 5, "");
+        PageHelper.startPage(seze, 10, "");
         List<Resouce> list= resouceMapper.selectPage(map);
         PageInfo<Resouce> pageInfo = new PageInfo<>(list);
       return new Result(pageInfo);

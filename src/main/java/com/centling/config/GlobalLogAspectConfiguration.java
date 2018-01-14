@@ -34,25 +34,31 @@ public class GlobalLogAspectConfiguration {
 
         long start = 0L;
         long end = 0L;
-        try{
+        try {
             start = System.currentTimeMillis();
             obj = pjp.proceed();
             end = System.currentTimeMillis();
+            if (end - start > 3000) {
+                System.err.println(DateUtil.sdf_datetime_format.format(new Date()) + "调用的类名称为：" + pjp.getTarget().getClass()
+                        + "," + "调用的方法名为：" + msig.getMethod().getName() +
+                        ",耗时为" + (end - start) + "ms");
+            } else {
+                System.out.println(DateUtil.sdf_datetime_format.format(new Date()) + "调用的类名称为：" + pjp.getTarget().getClass()
+                        + "," + "调用的方法名为：" + msig.getMethod().getName() +
+                        ",耗时为" + (end - start) + "ms");
+            }
 
-            System.out.println(DateUtil.sdf_datetime_format.format(new Date())+"调用的类名称为：" + pjp.getTarget().getClass()
-                    + "," + "调用的方法名为：" + msig.getMethod().getName() +
-                    ",耗时为" + (end-start) + "ms");
-        }catch (Throwable e) {
+        } catch (Throwable e) {
             ex = e;
             System.out.println(e);
-        }finally{
-            if(ex == null) {
+        } finally {
+            if (ex == null) {
                 return obj;
-            }else {
+            } else {
 
                 System.out.println("调用的类名称为：" + pjp.getTarget().getClass()
                         + "," + "调用的方法名为：" + msig.getMethod().getName() +
-                        ",耗时为" + (end-start) + "ms");
+                        ",耗时为" + (end - start) + "ms");
 
                 throw ex;
             }

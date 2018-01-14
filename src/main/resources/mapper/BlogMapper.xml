@@ -13,7 +13,7 @@
         </select>
     <select id="selectPage" parameterType="java.util.Map" resultType="com.centling.domain.Blogs">
         select id,blogsName,blogsStatus,blogsDate,blogsClassifyId,blogsClassifyName,userId,userName
-        ,createdTime,blogsPart  from blogs where deleteFlag=0
+        ,createdTime,blogsPart ,status from blogs where deleteFlag=0
         <if test="blogsStatus!=null">
             and blogsStatus=#{blogsStatus}
         </if>
@@ -32,7 +32,7 @@
     </select>
     <select id="getBlogsById" parameterType="java.lang.String" resultType="com.centling.domain.Blogs">
         select id,blogsName,blogsStatus,blogsDate,blogsClassifyId,blogsClassifyName,userId,userName
-        ,createdTime,blogsUrl from blogs where id=#{id} and deleteFlag=0
+        ,createdTime,blogsUrl ,status from blogs where id=#{id} and deleteFlag=0
     </select>
     <update id="addClick" parameterType="java.lang.String">
        UPDATE blogs set blogsClick=blogsClick+1 where id=#{id};
@@ -44,7 +44,7 @@
        UPDATE blogs set status=#{status} where id=#{id};
     </update>
     <update id="deleteBlog">
-       update  blogs set deleteFlag=1 ,delete=#{deleteTime}  where id=#{id};
+       update  blogs set deleteFlag=1 ,deleteTime=#{deleteTime}  where id=#{id};
     </update>
     <update id="updateBlogs" parameterType="com.centling.domain.Blogs">
        UPDATE blogs set status=#{status},blogsName=#{blogsName},blogsStatus=#{blogsStatus},
