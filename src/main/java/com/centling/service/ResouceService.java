@@ -3,7 +3,7 @@ package com.centling.service;
 
 import com.centling.domain.Resouce;
 import com.centling.mapper.blog.ResouceMapper;
-import com.centling.redis.RedisClient;
+
 import com.centling.utils.GridPageRequest;
 import com.centling.utils.GridReturnData;
 import com.centling.utils.Result;
@@ -19,8 +19,7 @@ import java.util.Map;
 public class ResouceService {
     @Autowired
     ResouceMapper resouceMapper;
-    @Autowired
-    RedisClient redisClient;
+
 
 
     public Result saveResouce(Resouce resouce) {
@@ -71,10 +70,8 @@ public class ResouceService {
     }
     public Result getResoucesById(Integer id,String name) {
 
-
-
         resouceMapper.addClick(id);
-            redisClient.setZKey("<a href='/blog/read?id='"+id+">"+name+"</a>");
+
             return new Result();
 
 

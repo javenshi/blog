@@ -37,21 +37,11 @@ public class DatabaseConfiguration {
                     Arrays.toString(env.getActiveProfiles()));
             throw new ApplicationContextException("Database connection pool is not configured correctly");
         }
-       /* HikariDataSource hikariDataSource =  (HikariDataSource) DataSourceBuilder
-                .create(dataSourceProperties.getClassLoader())
-                .type(HikariDataSource.class)
-                .driverClassName(dataSourceProperties.getDriverClassName())
-                .url(dataSourceProperties.getUrl())
-                .username(dataSourceProperties.getUsername())
-                .password(dataSourceProperties.getPassword())
-                .build();
-        return hikariDataSource;*/
         HikariConfig hikariConfig=new HikariConfig();
         hikariConfig.setIdleTimeout(20000);
-        hikariConfig.setMaxLifetime(30000);
-        hikariConfig.setIdleTimeout(30000);
+        hikariConfig.setMaxLifetime(25000);
         hikariConfig.setConnectionTimeout(3000000);
-        hikariConfig.setValidationTimeout(3000000);
+        hikariConfig.setValidationTimeout(2000000);
         hikariConfig.setMaximumPoolSize(100);
         hikariConfig.setConnectionTestQuery("select 1");
         hikariConfig.setDriverClassName("com.mysql.jdbc.Driver");

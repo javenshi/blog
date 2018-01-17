@@ -1,3 +1,4 @@
+/*
 package com.centling.redis;
 
 import org.springframework.context.annotation.Scope;
@@ -21,9 +22,11 @@ public class RedisClient {
     }
 
 
-    /**
+    */
+/**
      * 初始化切片池
-     */
+     *//*
+
     private void initialShardedPool()
     {
         // 池基本配置
@@ -66,7 +69,8 @@ public class RedisClient {
     }
 
     private void StringOperate() {
-      /*  System.out.println("======================String_1==========================");
+      */
+/*  System.out.println("======================String_1==========================");
         // 清空数据
         System.out.println("清空库中所有数据："+jedis.flushDB());
 
@@ -92,12 +96,16 @@ public class RedisClient {
         System.out.println("获取key002对应的新值"+jedis.get("key002"));
 
         System.out.println("=============增，删，查（多个）=============");
-        *//**
+        *//*
+*/
+/**
          * mset,mget同时新增，修改，查询多个键值对
          * 等价于：
          * jedis.set("name","ssss");
          * jedis.set("jarorwar","xxxx");
          *//*
+*/
+/*
         System.out.println("一次性新增key201,key202,key203,key204及其对应值："+jedis.mset("key201","value201",
                 "key202","value202","key203","value203","key204","value204"));
         System.out.println("一次性获取key201,key202,key203,key204各自对应的值："+
@@ -137,11 +145,13 @@ public class RedisClient {
 
         System.out.println("=============获取子串=============");
         System.out.println("获取key302对应值中的子串："+shardedJedis.getrange("key302", 5, 7));
-*/
+*//*
+
 }
 
     private void ListOperate() {
-     /*   System.out.println("======================list==========================");
+     */
+/*   System.out.println("======================list==========================");
         // 清空数据
         System.out.println("清空库中所有数据："+jedis.flushDB());
 
@@ -182,9 +192,13 @@ public class RedisClient {
         System.out.println("长度-numberlists："+shardedJedis.llen("numberlists"));
         // 排序
         *//*
+*/
+/*
          * list中存字符串时必须指定参数为alpha，如果不使用SortingParams，而是直接使用sort("list")，
          * 会出现"ERR One or more scores can't be converted into double"
          *//*
+*/
+/*
         SortingParams sortingParameters = new SortingParams();
         sortingParameters.alpha();
         sortingParameters.limit(0, 3);
@@ -193,10 +207,12 @@ public class RedisClient {
         // 子串：  start为元素下标，end也为元素下标；-1代表倒数一个元素，-2代表倒数第二个元素
         System.out.println("子串-第二个开始到结束："+shardedJedis.lrange("stringlists", 1, -1));
         // 获取列表指定下标的值
-        System.out.println("获取下标为2的元素："+shardedJedis.lindex("stringlists", 2)+"\n");*/
+        System.out.println("获取下标为2的元素："+shardedJedis.lindex("stringlists", 2)+"\n");*//*
+
     }
     private void KeyOperate() {
-       /* System.out.println("======================key==========================");
+       */
+/* System.out.println("======================key==========================");
         // 清空数据
         System.out.println("清空库中所有数据："+jedis.flushDB());
         // 判断key否存在
@@ -228,14 +244,18 @@ public class RedisClient {
         System.out.println("移除key001的生存时间："+jedis.persist("key001"));
         System.out.println("查看key001的剩余生存时间："+jedis.ttl("key001"));
         // 查看key所储存的值的类型
-        System.out.println("查看key所储存的值的类型："+jedis.type("key001"));*/
-        /*
+        System.out.println("查看key所储存的值的类型："+jedis.type("key001"));*//*
+
+        */
+/*
          * 一些其他方法：1、修改键名：jedis.rename("key6", "key0");
          *             2、将当前db的key移动到给定的db当中：jedis.move("foo", 1)
-         */
+         *//*
+
     }
     private void SetOperate() {
-       /* System.out.println("======================set==========================");
+       */
+/* System.out.println("======================set==========================");
         // 清空数据
         System.out.println("清空库中所有数据："+jedis.flushDB());
 
@@ -250,8 +270,12 @@ public class RedisClient {
         System.out.println("=============删=============");
         System.out.println("集合sets中删除元素element003："+jedis.srem("sets", "element003"));
         System.out.println("查看sets集合中的所有元素:"+jedis.smembers("sets"));
-        *//*System.out.println("sets集合中任意位置的元素出栈："+jedis.spop("sets"));//注：出栈元素位置居然不定？--无实际意义
+        *//*
+*/
+/*System.out.println("sets集合中任意位置的元素出栈："+jedis.spop("sets"));//注：出栈元素位置居然不定？--无实际意义
         System.out.println("查看sets集合中的所有元素:"+jedis.smembers("sets"));*//*
+*/
+/*
         System.out.println();
 
         System.out.println("=============改=============");
@@ -280,7 +304,8 @@ public class RedisClient {
         System.out.println("sets1和sets2交集："+jedis.sinter("sets1", "sets2"));
         System.out.println("sets1和sets2并集："+jedis.sunion("sets1", "sets2"));
         System.out.println("sets1和sets2差集："+jedis.sdiff("sets1", "sets2"));//差集：set1中有，set2中没有的元素
-   */ }
+   *//*
+ }
 
     public void SortedSetOperate() {
         System.out.println("======================zset==========================");
@@ -319,7 +344,8 @@ public class RedisClient {
         return map;
     }
     private void HashOperate() {
-      /*  System.out.println("======================hash==========================");
+      */
+/*  System.out.println("======================hash==========================");
         //清空数据
         System.out.println(jedis.flushDB());
 
@@ -348,5 +374,7 @@ public class RedisClient {
         System.out.println("获取hashs中所有的key："+shardedJedis.hkeys("hashs"));
         System.out.println("获取hashs中所有的value："+shardedJedis.hvals("hashs"));
         System.out.println();
-   */ }
+   *//*
+ }
 }
+*/

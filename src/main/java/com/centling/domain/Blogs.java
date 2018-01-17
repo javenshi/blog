@@ -31,8 +31,6 @@ public class Blogs {
         this.createdTime =time;
         this.userId=user.getId();
         this.userName=user.getUserName();
-        this.blogsUrl="";
-
     }
 
     public String getId() {
