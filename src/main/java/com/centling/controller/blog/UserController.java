@@ -7,6 +7,7 @@ import com.centling.domain.User;
 import com.centling.security.SecurityUtils;
 import com.centling.service.UserService;
 import com.centling.utils.Result;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
@@ -29,10 +30,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/blogUser")
 public class UserController {
+
     @Autowired
     UserService userService;
     private final static String CLIENT_ID = "3191489564";
@@ -65,19 +68,9 @@ public class UserController {
 
     private JSONObject getAccessToken(String code) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
-        StringBuilder sb = new StringBuilder();
-        sb.append("grant_type=authorization_code");
-        sb.append("&client_id=" + CLIENT_ID);
-        sb.append("&client_secret=" + CLIENT_SERCRET);
-        sb.append("&redirect_uri=" + REDIRECT_URI);
-        sb.append("&code=" + code);
         HttpPost post = new HttpPost(GET_TOKEN_URL+"?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SERCRET+"&grant_type=authorization_code&redirect_uri="+REDIRECT_URI+"&code="+code);
-        StringEntity stringEntity = null;
         String result = null;
         try {
-            stringEntity = new StringEntity(sb.toString());
-
-            //post.setEntity(stringEntity);
             result = EntityUtils.toString(httpClient.execute(post).getEntity());
             httpClient.close();
         } catch (UnsupportedEncodingException e1) {
@@ -95,15 +88,9 @@ public class UserController {
 
     private JSONObject getUserInfo(String access_token, String uid) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
-        StringBuilder sb = new StringBuilder();
-        sb.append("?access_token=" + access_token);
-        sb.append("&uid=" + uid);
-        HttpPost post = new HttpPost(GET_USER_INFO);
-        StringEntity stringEntity = null;
+        HttpGet post = new HttpGet(GET_USER_INFO+"?access_token="+access_token+"&uid="+uid);
         String result = null;
         try {
-            stringEntity = new StringEntity(sb.toString());
-            post.setEntity(stringEntity);
             result = EntityUtils.toString(httpClient.execute(post).getEntity());
             httpClient.close();
         } catch (UnsupportedEncodingException e1) {
@@ -114,6 +101,7 @@ public class UserController {
             e1.printStackTrace();
         } finally {
             JSONObject json = new JSONObject(JSON.parseObject(result));
+            System.out.println(json);
             return json;
         }
     }
