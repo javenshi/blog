@@ -1,5 +1,6 @@
 package com.centling.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.centling.config.ApplicationProperties;
 import com.centling.controller.JWTToken;
 import com.centling.domain.User;
@@ -7,6 +8,7 @@ import com.centling.mapper.blog.UserMapper;
 import com.centling.security.SecurityUtils;
 import com.centling.security.jwt.TokenProvider;
 import com.centling.utils.Result;
+import com.centling.utils.blogUtils.HttpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,16 +24,36 @@ import javax.servlet.http.HttpServletResponse;
 @Service
 public class UserService {
     @Autowired
-    private TokenProvider tokenProvider;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
     UserMapper userMapper;
+    private final static String CLIENT_ID = "3191489564";
+    private final static String CLIENT_SERCRET = "bad088883841d9d1be1a59011ac98fd7";
+    private final static String GET_TOKEN_URL = "https://api.weibo.com/oauth2/access_token";
+    private final static String REDIRECT_URI = "http://zhixiang.org.cn";
+    private final static String GET_USER_INFO = "https://api.weibo.com/2/users/show.json";
 
-    public Result cheackName(String name, int id) {
-        if (userMapper.selectByNameAndId(name, id) > 0) {
-            return new Result(202, "用户已存在");
+    public Result weiboLogin(String code) {
+        try {
+            String access_token = "";
+            String uid = "";
+            String url=GET_TOKEN_URL+"?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SERCRET+"&grant_type=authorization_code&redirect_uri="+REDIRECT_URI+"&code="+code;
+            JSONObject token = HttpUtils.post(url);
+            access_token = token.getString("access_token");
+            uid = token.getString("uid");
+            url=GET_USER_INFO+"?access_token="+access_token+"&uid="+uid;
+            JSONObject userInfo= HttpUtils.get(url);
+            User user=new User(userInfo.getString("idstr"),userInfo.getString("screen_name"),1,userInfo.getString("location"),userInfo.getString("profile_image_url"),userInfo.getString("gender"),userInfo.getString("description"));
+            if(userMapper.selectByNameAndUid(user.getUserName(),user.getUid())==0){
+                insert(user);
+            }
+            user= userMapper.selectUserByNameAndUid(user.getUserName(),user.getUid());
+            return new Result(user);
+        }catch (Exception e){
+            e.printStackTrace();
         }
+       return new Result(300,"微博登录失败");
+    }
+    public Result cheackName(String name, int id) {
+
         return new Result();
     }
 
@@ -40,18 +62,5 @@ public class UserService {
         userMapper.insert(user);
     }
 
-    public Result login(User user) {
-        if (userMapper.selectByNameAndId(user.getUserName(), 0) == 0) {
-            return new Result(202, "用户不存在");
-        } else if (userMapper.selectByNameAndPassWord(user) > 0) {
-            User u = userMapper.selectStatusByName(user.getUserName());
-            if (u.getStatus() == 0) {
-                return new Result(200, "登录成功", u);
-            } else {
-                return new Result(202, "用户不可用");
-            }
-        } else {
-            return new Result(202, "密码错误");
-        }
-    }
+
 }

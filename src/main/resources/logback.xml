@@ -22,12 +22,12 @@
         <file>${user.dir}/../SMARTSEAL_LOGS/smartseal.log</file>
         <!-- 日志级别过滤器 -->
         <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
-            <!--&lt;!&ndash; 过滤的级别 &ndash;&gt;-->
-            <!--<level>DEBUG</level>-->
-            <!--&lt;!&ndash; 匹配时的操作：接收（记录） &ndash;&gt;-->
-            <!--<onMatch>ACCEPT</onMatch>-->
-            <!--&lt;!&ndash; 不匹配时的操作：拒绝（不记录） &ndash;&gt;-->
-            <!--<onMismatch>DENY</onMismatch>-->
+        <!--&lt;!&ndash; 过滤的级别 &ndash;&gt;-->
+        <!--<level>DEBUG</level>-->
+        <!--&lt;!&ndash; 匹配时的操作：接收（记录） &ndash;&gt;-->
+        <!--<onMatch>ACCEPT</onMatch>-->
+        <!--&lt;!&ndash; 不匹配时的操作：拒绝（不记录） &ndash;&gt;-->
+        <!--<onMismatch>DENY</onMismatch>-->
         <!--</filter>-->
         <!-- 日志格式 -->
         <encoder>
@@ -42,7 +42,7 @@
             <!-- 日志文件名格式 -->
             <fileNamePattern>${user.dir}/../SMARTSEAL_LOGS/smartseal.%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 最大保存时间：15天-->
-            <maxHistory>15</maxHistory>
+            <maxHistory>10</maxHistory>
         </rollingPolicy>
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
             <MaxFileSize>10MB</MaxFileSize>

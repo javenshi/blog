@@ -18,6 +18,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,73 +39,17 @@ public class UserController {
 
     @Autowired
     UserService userService;
-    private final static String CLIENT_ID = "3191489564";
-    private final static String CLIENT_SERCRET = "bad088883841d9d1be1a59011ac98fd7";
-    private final static String GET_TOKEN_URL = "https://api.weibo.com/oauth2/access_token";
-    private final static String REDIRECT_URI = "http://39.108.12.206";
-    private final static String GET_USER_INFO = "https://api.weibo.com/2/users/show.json";
 
 
 
     @PostMapping(value = "/weiboReturn/{code}")
     public Result weiboReturn(@PathVariable String code) {
-        System.out.println(code);
-        JSONObject userInfo=null;
-        try {
-            String access_token = "";
-            String uid = "";
-            JSONObject token = getAccessToken(code);
-            access_token = token.getString("access_token");
-            uid = token.getString("uid");
-             userInfo = getUserInfo(access_token, uid);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        return new Result(userInfo);
-
+        return userService.weiboLogin(code);
     }
 
-    private JSONObject getAccessToken(String code) {
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpPost post = new HttpPost(GET_TOKEN_URL+"?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SERCRET+"&grant_type=authorization_code&redirect_uri="+REDIRECT_URI+"&code="+code);
-        String result = null;
-        try {
-            result = EntityUtils.toString(httpClient.execute(post).getEntity());
-            httpClient.close();
-        } catch (UnsupportedEncodingException e1) {
-            e1.printStackTrace();
-        } catch (ClientProtocolException e1) {
-            e1.printStackTrace();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        } finally {
 
-            JSONObject json = new JSONObject(JSON.parseObject(result));
-            return json;
-        }
-    }
 
-    private JSONObject getUserInfo(String access_token, String uid) {
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpGet post = new HttpGet(GET_USER_INFO+"?access_token="+access_token+"&uid="+uid);
-        String result = null;
-        try {
-            result = EntityUtils.toString(httpClient.execute(post).getEntity());
-            httpClient.close();
-        } catch (UnsupportedEncodingException e1) {
-            e1.printStackTrace();
-        } catch (ClientProtocolException e1) {
-            e1.printStackTrace();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        } finally {
-            JSONObject json = new JSONObject(JSON.parseObject(result));
-            System.out.println(json);
-            return json;
-        }
-    }
+
     /*  @PostMapping(value = "/login")
       public Result login(@RequestBody User user) {
 
