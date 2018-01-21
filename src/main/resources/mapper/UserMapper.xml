@@ -4,8 +4,8 @@
         <select id="selectByNameAndUid" resultType="java.lang.Integer">
             select count(1) from user where userName=#{name} and uid=#{uid};
         </select>
-    <select id="selectUserByNameAndUid" resultType="com.centling.domain.User">
-            select * from user where userName=#{name} and uid=#{uid};
+    <select id="selectBySourceAndUid" resultType="com.centling.domain.User">
+            select * from user where uSource=#{sorce} and uid=#{uid};
         </select>
     <select id="selectById" parameterType="java.lang.Integer" resultType="com.centling.domain.User">
             select * from user where id=#{id};
