@@ -46,6 +46,10 @@ public class UserController {
     public Result weiboReturn(@PathVariable String code) {
         return userService.weiboLogin(code);
     }
+    @PostMapping(value = "/qqReturn/{code}")
+    public Result qqReturn(@PathVariable String code) {
+        return userService.qqLogin(code);
+    }
 
 
 

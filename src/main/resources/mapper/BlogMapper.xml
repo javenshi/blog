@@ -5,14 +5,14 @@
     <insert id="insert" parameterType="com.centling.domain.Blogs">
 
             INSERT INTO blogs (id,blogsName,blogsStatus,blogsDate,blogsClassifyId,blogsClassifyName,userId,userName
-            ,createdTime,blogsPart,blogsUrl) values (#{id},#{blogsName},#{blogsStatus},#{blogsDate},#{blogsClassifyId},#{blogsClassifyName},#{userId},#{userName},
-            #{createdTime},#{blogsPart},#{blogsUrl})
+            ,createdTime,blogsPart,blogsUrl,profileUrl) values (#{id},#{blogsName},#{blogsStatus},#{blogsDate},#{blogsClassifyId},#{blogsClassifyName},#{userId},#{userName},
+            #{createdTime},#{blogsPart},#{blogsUrl},#{profileUrl})
     </insert>
     <select id="seletcClassifyById" parameterType="java.lang.Integer" resultType="java.lang.String">
         select blogsClassifyName from blogsclassify where blogsClassifyId=#{id}
         </select>
     <select id="selectPage" parameterType="java.util.Map" resultType="com.centling.domain.Blogs">
-        select id,blogsName,blogsStatus,blogsDate,blogsClassifyId,blogsClassifyName,userId,userName
+        select id,blogsName,blogsStatus,blogsDate,profileUrl,blogsClassifyId,blogsClassifyName,userId,userName
         ,createdTime,blogsPart ,status from blogs where deleteFlag=0
         <if test="blogsStatus!=null">
             and blogsStatus=#{blogsStatus}
@@ -34,8 +34,8 @@
         select id,blogsName,blogsStatus,blogsDate,blogsClassifyId,blogsClassifyName,userId,userName
         ,createdTime,blogsUrl ,status from blogs where id=#{id} and deleteFlag=0
     </select>
-    <update id="addClick" parameterType="java.lang.String">
-       UPDATE blogs set blogsClick=blogsClick+1 where id=#{id};
+    <update id="addClick">
+       UPDATE blogs set blogsClick=#{click} where id=#{id};
     </update>
     <update id="addClassClick" parameterType="java.lang.String">
        UPDATE blogsclassify set blogsClassifyClick=blogsClassifyClick+1 where blogsClassifyId= (select blogsClassifyId from blogs where id=#{id})

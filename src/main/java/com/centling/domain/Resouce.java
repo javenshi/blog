@@ -10,7 +10,16 @@ public class Resouce {
     private int status;
     private String userName;
     private String context;
+    private String profileUrl;
     private long  deleteTime;
+
+    public String getProfileUrl() {
+        return profileUrl;
+    }
+
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
+    }
 
     public int getId() {
         return id;

@@ -19,7 +19,7 @@
     <appender name="ERROR-OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 保存日志文件的路径 -->
         <!--<file>/usr/local/LAIHUO_LOGS/laihuo_service.log</file>-->
-        <file>${user.dir}/../SMARTSEAL_LOGS/smartseal.log</file>
+        <file>/usr/local/SMARTSEAL_LOGS/smartseal.log</file>
         <!-- 日志级别过滤器 -->
         <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
         <!--&lt;!&ndash; 过滤的级别 &ndash;&gt;-->
@@ -40,7 +40,7 @@
         <!-- 循环政策：基于时间创建日志文件 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 日志文件名格式 -->
-            <fileNamePattern>${user.dir}/../SMARTSEAL_LOGS/smartseal.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>/usr/local/SMARTSEAL_LOGS/smartseal.%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 最大保存时间：15天-->
             <maxHistory>10</maxHistory>
         </rollingPolicy>

@@ -15,7 +15,7 @@ public interface BlogsMapper {
 
     Blogs getBlogsById(String id);
 
-    void addClick(String id);
+    void addClick(@Param("id") String id,@Param("click") int click);
     void addClassClick(String id);
 
     void passBlog(@Param("status") Integer status, @Param("id") String id);

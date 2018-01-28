@@ -19,6 +19,7 @@ import java.util.Date;
 @Component
 @Order(1)
 public class GlobalLogAspectConfiguration {
+    private final org.slf4j.Logger log = LoggerFactory.getLogger(GlobalLogAspectConfiguration.class);
 
     @Around("execution (* com.centling.service.*.*(..))")
     public Object globalLogBack(ProceedingJoinPoint pjp) throws Throwable {
@@ -39,24 +40,24 @@ public class GlobalLogAspectConfiguration {
             obj = pjp.proceed();
             end = System.currentTimeMillis();
             if (end - start > 3000) {
-                System.err.println(DateUtil.sdf_datetime_format.format(new Date()) + "调用的类名称为：" + pjp.getTarget().getClass()
+                log.info(DateUtil.sdf_datetime_format.format(new Date()) + "调用的类名称为：" + pjp.getTarget().getClass()
                         + "," + "调用的方法名为：" + msig.getMethod().getName() +
                         ",耗时为" + (end - start) + "ms");
             } else {
-                System.out.println(DateUtil.sdf_datetime_format.format(new Date()) + "调用的类名称为：" + pjp.getTarget().getClass()
+                log.info(DateUtil.sdf_datetime_format.format(new Date()) + "调用的类名称为：" + pjp.getTarget().getClass()
                         + "," + "调用的方法名为：" + msig.getMethod().getName() +
                         ",耗时为" + (end - start) + "ms");
             }
 
         } catch (Throwable e) {
             ex = e;
-            System.out.println(e);
+            log.info(e.getMessage());
         } finally {
             if (ex == null) {
                 return obj;
             } else {
 
-                System.out.println("调用的类名称为：" + pjp.getTarget().getClass()
+                log.info("调用的类名称为：" + pjp.getTarget().getClass()
                         + "," + "调用的方法名为：" + msig.getMethod().getName() +
                         ",耗时为" + (end - start) + "ms");
 

@@ -27,7 +27,7 @@ public class AdminController {
     public Result upl(@RequestParam(value="file",required=false)MultipartFile file){
         OSSClient ossClient= ossUtil.getUploadOSSClient();
         String key=ossUtil.uploadToOSS(ossClient,"Carousel/",file);
-        String url="<img src=\""+key+"\">";
+        String url="<img style=\"width:100%;height:100%;\" src=\""+key+"\">";
         carouselMapper.insert(url);
         return new Result();
     }

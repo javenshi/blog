@@ -31,13 +31,10 @@ public class BlogsService {
         blogs.setBlogsClassifyName(ClassifyName);
         User u=userMapper.selectStatusByName(blogs.getUserName());
         if(blogs.getId()!=null){
-           // redisClient.setStringKey(blogs.getId(),blogs.getBlogsUrl());
-            blogs.setBlogsUrl("");
             blogs.setBlogsDate(System.currentTimeMillis());
             blogsMapper.updateBlogs(blogs);
         }else{
             String uuid= UUID.randomUUID().toString();
-           // redisClient.setStringKey(uuid,blogs.getBlogsUrl());
             blogs.setBlogs(uuid,u);
             blogsMapper.insert(blogs);
         }
@@ -58,8 +55,9 @@ public class BlogsService {
     public Result getBlogsById(String id) {
         Blogs blogs=blogsMapper.getBlogsById(id);
         if(blogs!=null){
+            blogs.setBlogsClick(blogs.getBlogsClick()+1);
+            blogsMapper.addClick(id,blogs.getBlogsClick());
 
-            blogsMapper.addClick(id);
             blogsMapper.addClassClick(id);
             //redisClient.setZKey("<a href='/blog/read?id='"+id+">"+blogs.getUserName()+"</a>");
             return new Result(blogs);

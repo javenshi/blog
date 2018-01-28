@@ -51,4 +51,21 @@ public class HttpUtils {
             return new JSONObject(JSON.parseObject(result));
         }
     }
+    public static String getString(String url){
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpGet get = new HttpGet(url);
+        String result = null;
+        try {
+            result = EntityUtils.toString(httpClient.execute(get).getEntity());
+            httpClient.close();
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
+        } catch (ClientProtocolException e1) {
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        } finally {
+            return result;
+        }
+    }
 }

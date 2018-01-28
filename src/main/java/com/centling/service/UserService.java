@@ -19,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -32,40 +33,53 @@ public class UserService {
     private final org.slf4j.Logger log = LoggerFactory.getLogger(WebConfigurer.class);
 
     private final static String CLIENT_ID = "3191489564";
+    private final static String QQCLIENT_ID = "101453375";
     private final static String CLIENT_SERCRET = "bad088883841d9d1be1a59011ac98fd7";
+    private final static String QQCLIENT_SERCRET = "1a31c78316626051c29c27b2454c29c6";
     private final static String GET_TOKEN_URL = "https://api.weibo.com/oauth2/access_token";
+    private final static String QQGET_TOKEN_URL = "https://graph.qq.com/oauth2.0/token";
+    private final static String QQGET_OPEN_ID = "https://graph.qq.com/oauth2.0/me";
     private final static String REDIRECT_URI = "http://zhixiang.org.cn/%23/login";
+    private final static String QQREDIRECT_URI = "http://zhixiang.org.cn/%23/qqLogin";
     private final static String GET_USER_INFO = "https://api.weibo.com/2/users/show.json";
+    private final static String QQGET_USER_INFO = "https://graph.qq.com/user/get_user_info";
+
     public Result weiboLogin(String code) {
         log.info("weibologin statrt---------------------------------------");
-        User user=null;
+        User user = null;
         try {
             String access_token = "";
             String uid = "";
-            String url=GET_TOKEN_URL+"?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SERCRET+"&grant_type=authorization_code&redirect_uri="+REDIRECT_URI+"&code="+code;
+            String url = GET_TOKEN_URL + "?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SERCRET + "&grant_type=authorization_code&redirect_uri=" + REDIRECT_URI + "&code=" + code;
             JSONObject token = HttpUtils.post(url);
-            log.info("weibologin token"+token.toString()+"---------------------------------------");
-            if(token.toString().indexOf("error_code")>0){
-                return new Result(400,"登录失败");
+            log.info("weibologin token" + token.toString() + "---------------------------------------");
+            if (token.toString().indexOf("error_code") > 0) {
+                return new Result(400, "登录失败");
             }
             access_token = token.getString("access_token");
 
             uid = token.getString("uid");
-            url=GET_USER_INFO+"?access_token="+access_token+"&uid="+uid;
-            JSONObject userInfo= HttpUtils.get(url);
-            log.info("weibologin userInfo"+userInfo.toString()+"---------------------------------------");
-           user=new User(userInfo.getString("idstr"),userInfo.getString("screen_name"),1,userInfo.getString("location"),userInfo.getString("profile_image_url"),userInfo.getString("gender"),userInfo.getString("description"));
-            if(userMapper.selectBySourceAndUid(1,user.getUid())==0){
-                insert(user);
-            }
-            user= userMapper.selectUserByNameAndUid(user.getUserName(),user.getUid());
-
-        }catch (Exception e){
+            url = GET_USER_INFO + "?access_token=" + access_token + "&uid=" + uid;
+            JSONObject userInfo = HttpUtils.get(url);
+            log.info("weibologin userInfo" + userInfo.toString() + "---------------------------------------");
+            user = new User(userInfo.getString("idstr"), userInfo.getString("screen_name"), 1, userInfo.getString("location"), userInfo.getString("profile_image_url"), userInfo.getString("gender"), userInfo.getString("description"));
+            user = insertUser(user, 1);
+        } catch (Exception e) {
             log.info("weiboyichang+++++++++++++++++++++++++++++++++++++++++++++++");
             e.printStackTrace();
         }
         return new Result(user);
     }
+
+    @Transactional
+    public User insertUser(User user, int scope) {
+        if (userMapper.selectBySourceAndUid(scope, user.getUid()) == null) {
+            insert(user);
+        }
+        user = userMapper.selectBySourceAndUid(scope, user.getUid());
+        return user;
+    }
+
     public Result cheackName(String name, int id) {
 
         return new Result();
@@ -77,4 +91,37 @@ public class UserService {
     }
 
 
+    public Result qqLogin(String code) {
+        log.info("qqlogin statrt---------------------------------------");
+        User user = null;
+        try {
+            String access_token = "";
+            String openId = "";
+            String url = QQGET_TOKEN_URL + "?grant_type=authorization_code&client_id=" + QQCLIENT_ID + "&client_secret=" + QQCLIENT_SERCRET + "&code=" + code + "&redirect_uri=" + QQREDIRECT_URI;
+            String token = HttpUtils.getString(url);
+            log.info("qqlogin token" + token + "---------------------------------------");
+            if (token.indexOf("access_token") == -1) {
+                return new Result(400, "登录失败");
+            }
+            access_token = token.substring(token.indexOf("=") + 1, token.indexOf("&"));
+            String oid = HttpUtils.getString(QQGET_OPEN_ID + "?access_token=" + access_token);
+            openId = oid.substring(oid.indexOf("openid\":\"") + 9, oid.lastIndexOf("\""));
+            url = QQGET_USER_INFO + "?access_token=" + access_token + "&oauth_consumer_key=" + QQCLIENT_ID + "&openid=" + openId;
+            JSONObject userInfo = HttpUtils.get(url);
+            log.info("qqlogin userInfo" + userInfo.toString() + "---------------------------------------");
+            String gender;
+            if ("男".equals(userInfo.getString("gender"))) {
+                gender = "m";
+            } else {
+                gender = "f";
+            }
+            user = new User(openId, userInfo.getString("nickname"), 2, "未知", userInfo.getString("figureurl_qq_1"), gender, "");
+            user = insertUser(user, 2);
+        } catch (Exception e) {
+            log.info("qqechang+++++++++++++++++++++++++++++++++++++++++++++++");
+            log.info(e.getMessage());
+            e.printStackTrace();
+        }
+        return new Result(user);
+    }
 }

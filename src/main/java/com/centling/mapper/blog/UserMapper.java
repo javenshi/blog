@@ -4,7 +4,7 @@ import com.centling.domain.User;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
-    int selectBySourceAndUid(@Param("sorce") int sorce,@Param("uid") String id);
+    User selectBySourceAndUid(@Param("sorce") int sorce,@Param("uid") String id);
     int insert(User u);
 
     int selectByNameAndPassWord(User user);

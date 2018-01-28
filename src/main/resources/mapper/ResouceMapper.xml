@@ -2,11 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.centling.mapper.blog.ResouceMapper">
 
-
-
     <insert id="insert" parameterType="com.centling.domain.Resouce">
-            INSERT INTO resource (resouceName,resouceUrl,userId,userName,resouceClick,status,creatTime,context) values
-            (#{resouceName},#{resouceUrl},#{userId},#{userName},#{resouceClick},#{status},#{creatTime},#{context})
+            INSERT INTO resource (resouceName,profileUrl,resouceUrl,userId,userName,resouceClick,status,creatTime,context) values
+            (#{resouceName},#{profileUrl},#{resouceUrl},#{userId},#{userName},#{resouceClick},#{status},#{creatTime},#{context})
     </insert>
 
     <select id="selectPage" parameterType="java.util.Map" resultType="com.centling.domain.Resouce">

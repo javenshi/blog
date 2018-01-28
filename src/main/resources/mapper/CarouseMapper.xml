@@ -7,7 +7,7 @@
     <insert id="insert" parameterType="java.lang.String">
             INSERT INTO carousel (url) values (#{url})
         </insert>
-    <update id="deleteById" parameterType="java.lang.String">
+    <update id="deleteById" parameterType="java.lang.Integer">
             update carousel set delete_flag=1 where id=#{id}
         </update>
     <select id="selectTimeOut" resultType="java.lang.Integer">

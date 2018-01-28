@@ -18,6 +18,7 @@ public class Blogs {
     private int createdBy;
     private long lastModifiedTime;
     private String  lastModifiedName;
+    private String profileUrl;
     private int  lastModifiedBy;
     private int deleteFlag;
 
@@ -39,6 +40,14 @@ public class Blogs {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getProfileUrl() {
+        return profileUrl;
+    }
+
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
     }
 
     public String getBlogsName() {
