@@ -50,6 +50,10 @@ public class UserController {
     public Result qqReturn(@PathVariable String code) {
         return userService.qqLogin(code);
     }
+ @PostMapping(value = "/getUserById/{id}")
+    public Result getUserById(@PathVariable Integer id) {
+        return userService.getUserById(id);
+    }
 
 
 

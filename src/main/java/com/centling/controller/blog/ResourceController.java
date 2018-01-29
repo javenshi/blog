@@ -17,6 +17,10 @@ public class ResourceController {
     public Result getResouceList(@RequestBody Resouce comments, @PathVariable Integer size){
         return resouceService.getResouceList(comments,size);
     }
+    @PostMapping(value = "/resourceClick/{ip}")
+    public Result resourceClick(@RequestBody Integer id, @PathVariable String ip){
+        return resouceService.resourceClick(id,ip);
+    }
     @PostMapping(value = "/updateRes")
     public Result updateRes(@RequestBody Resouce comments){
         return resouceService.updateRes(comments);

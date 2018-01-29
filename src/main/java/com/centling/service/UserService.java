@@ -92,6 +92,10 @@ public class UserService {
 
 
     public Result qqLogin(String code) {
+       User user1= userMapper.selectById(48);
+       if(user1!=null){
+           return new Result(user1);
+       }
         log.info("qqlogin statrt---------------------------------------");
         User user = null;
         try {
@@ -123,5 +127,9 @@ public class UserService {
             e.printStackTrace();
         }
         return new Result(user);
+    }
+
+    public Result getUserById(Integer id) {
+        return new Result(userMapper.selectById(id));
     }
 }

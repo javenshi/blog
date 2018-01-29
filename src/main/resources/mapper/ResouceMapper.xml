@@ -34,4 +34,7 @@
     <update id="addClick" parameterType="java.lang.Integer">
         UPDATE resource set resouceClick=resouceClick+1 where id=#{id};
     </update>
+    <select id="selectById" parameterType="java.lang.Integer" resultType="com.centling.domain.Resouce">
+        select * from resource  where id=#{id};
+    </select>
 </mapper>

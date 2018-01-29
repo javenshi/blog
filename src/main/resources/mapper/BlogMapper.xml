@@ -13,7 +13,7 @@
         </select>
     <select id="selectPage" parameterType="java.util.Map" resultType="com.centling.domain.Blogs">
         select id,blogsName,blogsStatus,blogsDate,profileUrl,blogsClassifyId,blogsClassifyName,userId,userName
-        ,createdTime,blogsPart ,status from blogs where deleteFlag=0
+        ,createdTime,blogsPart ,status ,blogsClick from blogs where deleteFlag=0
         <if test="blogsStatus!=null">
             and blogsStatus=#{blogsStatus}
         </if>
@@ -32,14 +32,17 @@
     </select>
     <select id="getBlogsById" parameterType="java.lang.String" resultType="com.centling.domain.Blogs">
         select id,blogsName,blogsStatus,blogsDate,blogsClassifyId,blogsClassifyName,userId,userName
-        ,createdTime,blogsUrl ,status from blogs where id=#{id} and deleteFlag=0
+        ,createdTime,blogsUrl ,status,blogsClick from blogs where id=#{id} and deleteFlag=0
     </select>
-    <update id="addClick">
-       UPDATE blogs set blogsClick=#{click} where id=#{id};
+    <update id="addClick" parameterType="java.lang.String">
+       UPDATE blogs set blogsClick=blogsClick+1 where id=#{id}
     </update>
-    <update id="addClassClick" parameterType="java.lang.String">
-       UPDATE blogsclassify set blogsClassifyClick=blogsClassifyClick+1 where blogsClassifyId= (select blogsClassifyId from blogs where id=#{id})
-    </update>
+    <select id="selectClassId" parameterType="java.lang.String" resultType="java.lang.Integer">
+      select blogsClassifyId from blogs where id=#{id}
+    </select>
+    <select id="addClassClick" parameterType="java.lang.Integer" >
+       UPDATE blogsclassify set blogsClassifyClick=blogsClassifyClick+1 where blogsClassifyId= #{id}
+    </select>
     <update id="passBlog">
        UPDATE blogs set status=#{status} where id=#{id};
     </update>
@@ -51,6 +54,13 @@
        blogsDate=#{blogsDate},blogsClassifyId=#{blogsClassifyId},blogsPart=#{blogsPart},
        blogsClassifyName=#{blogsClassifyName} where id=#{id};
     </update>
-
+<select id="selectTopBlogId" parameterType="java.lang.String" resultType="com.centling.domain.Blogs">
+  SELECT id, max(blogsDate),blogsName from blogs  where userId= (SELECT userId from blogs  where id=#{id})
+  and  (SELECT blogsDate from blogs  where id=#{id}) > blogsDate and deleteFlag=0 and status=2
+</select>
+    <select id="selectDownBlogId" parameterType="java.lang.String" resultType="com.centling.domain.Blogs">
+  SELECT id, min(blogsDate),blogsName from blogs  where userId= (SELECT userId from blogs  where id=#{id})
+  and blogsDate > (SELECT blogsDate from blogs  where id=#{id}) and deleteFlag=0 and status=2
+</select>
 
 </mapper>

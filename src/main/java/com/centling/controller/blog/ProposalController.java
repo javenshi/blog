@@ -2,6 +2,7 @@ package com.centling.controller.blog;
 
 import com.centling.domain.Proposal;
 import com.centling.domain.Resouce;
+import com.centling.mapper.blog.RankIngMapper;
 import com.centling.service.ProposalService;
 import com.centling.service.ResouceService;
 import com.centling.utils.GridFilterInfo;
@@ -17,6 +18,9 @@ import java.util.List;
 public class ProposalController {
     @Autowired
     ProposalService proposalService;
+    @Autowired
+    RankIngMapper rankIngMapper;
+
     @PostMapping(value = "/getProposalList")
     public Result getResouceList( @RequestBody GridPageRequest gridPageRequest){
         return proposalService.getProposalList(gridPageRequest);
@@ -34,6 +38,12 @@ public class ProposalController {
 
     @PostMapping(value = "/delete/{id}")
     public Result deleteRe(@PathVariable Integer id){
+
         return proposalService.deleteRe(id);
+    }
+    @PostMapping(value = "/getRankIng")
+    public Result getRankIng(){
+
+        return new Result(rankIngMapper.selectPage());
     }
 }

@@ -26,9 +26,9 @@ public class BlogController {
     public Result selectPage(@RequestBody GridPageRequest gridPageRequest){
         return new Result(blogsService.selectPage(gridPageRequest));
     }
-    @PostMapping(value = "/getBlogsById")
-    public Result getBlogsById(@RequestBody String id){
-        return blogsService.getBlogsById(id);
+    @PostMapping(value = "/getBlogsById/{ip}")
+    public Result getBlogsById(@RequestBody String id,@PathVariable String ip){
+        return blogsService.getBlogsById(id,ip);
     }
     @PostMapping(value = "/passBlog/{id}")
     public Result passBlog(@RequestBody Integer status,@PathVariable String id){
@@ -37,6 +37,10 @@ public class BlogController {
     @PostMapping(value = "/deleteBlog/{id}")
     public Result deleteBlog(@PathVariable String id){
         return blogsService.deleteBlog(id);
+    }
+    @PostMapping(value = "/getTopAndDown/{id}")
+    public Result getTopAndDown(@PathVariable String id){
+        return blogsService.getTopAndDown(id);
     }
     @PostMapping(value = "/getComentsList/{size}")
     public Result getComentsList(@RequestBody Comments comments,@PathVariable Integer size){

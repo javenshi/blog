@@ -15,12 +15,18 @@ public interface BlogsMapper {
 
     Blogs getBlogsById(String id);
 
-    void addClick(@Param("id") String id,@Param("click") int click);
-    void addClassClick(String id);
+    void addClick( String id);
+
+    Integer selectClassId(String id);
 
     void passBlog(@Param("status") Integer status, @Param("id") String id);
 
     void updateBlogs(Blogs blogs);
 
     void deleteBlog(@Param("deleteTime") long time,@Param("id") String id);
+
+    void addClassClick(Integer classId);
+
+    Blogs selectTopBlogId(String id);
+    Blogs selectDownBlogId(String id);
 }
