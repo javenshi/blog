@@ -24,6 +24,7 @@
 
 package com.centling.config;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.centling.github.pagehelper.PageFilterInterceptor;
 import com.github.pagehelper.PageInterceptor;
 import org.apache.ibatis.plugin.Interceptor;
@@ -41,6 +42,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.Properties;
 
 /**
@@ -104,6 +106,33 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
     @Bean
     @Override
     public PlatformTransactionManager annotationDrivenTransactionManager() {
+        dataSource=getDataSource();
         return new DataSourceTransactionManager(dataSource);
+    }
+
+    public DruidDataSource getDataSource() {
+        DruidDataSource druidDataSource = new DruidDataSource();
+        druidDataSource.setUrl("jdbc:mysql://39.108.12.206:3306/blog??useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true");
+        druidDataSource.setUsername("root");
+        druidDataSource.setPassword("password");
+        druidDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        try {
+            druidDataSource.setFilters("stat");
+            druidDataSource.setMaxActive(20);
+            druidDataSource.setMinIdle(2);
+            druidDataSource.setInitialSize(1);
+            druidDataSource.setMaxWait(60000);
+            druidDataSource.setTimeBetweenEvictionRunsMillis(500000);
+            druidDataSource.setMinEvictableIdleTimeMillis(600000);
+            druidDataSource.setValidationQuery("select 1");
+            druidDataSource.setTestWhileIdle(true);
+            druidDataSource.setTestOnBorrow(true);
+            druidDataSource.setTestOnReturn(false);
+            druidDataSource.setPoolPreparedStatements(true);
+            druidDataSource.setMaxOpenPreparedStatements(100);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return druidDataSource;
     }
 }
