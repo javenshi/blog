@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.*;
 public class ResourceController {
     @Autowired
     ResouceService resouceService;
-    @PostMapping(value = "/getResouceList/{size}")
-    public Result getResouceList(@RequestBody Resouce comments, @PathVariable Integer size){
-        return resouceService.getResouceList(comments,size);
+
+    @PostMapping(value = "/getResouceList")
+    public Result getResouceList(@RequestBody GridPageRequest gridPageRequest){
+        return resouceService.getResouceList(gridPageRequest);
     }
     @PostMapping(value = "/resourceClick/{ip}")
     public Result resourceClick(@RequestBody Integer id, @PathVariable String ip){
@@ -25,10 +26,7 @@ public class ResourceController {
     public Result updateRes(@RequestBody Resouce comments){
         return resouceService.updateRes(comments);
     }
-    @PostMapping(value = "/getResouceList")
-    public Result getResouceList(@RequestBody GridPageRequest gridPageRequest){
-        return resouceService.getResouceList(gridPageRequest);
-    }
+
     @RequestMapping(value = "/saveResouce",method= RequestMethod.POST)
     public Result saveResouce(@RequestBody Resouce comments){
         return resouceService.saveResouce(comments);
