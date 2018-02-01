@@ -33,7 +33,7 @@ public class BlogsService {
     public Result insert(Blogs blogs) {
         String ClassifyName = blogsMapper.seletcClassifyById(blogs.getBlogsClassifyId());
         blogs.setBlogsClassifyName(ClassifyName);
-        User u = userMapper.selectStatusByName(blogs.getUserName());
+        User u = userMapper.selectById(blogs.getUserId());
         if (blogs.getId() != null) {
             blogs.setBlogsDate(System.currentTimeMillis());
             blogsMapper.updateBlogs(blogs);

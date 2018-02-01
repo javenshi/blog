@@ -11,8 +11,8 @@
             select * from user where id=#{id};
         </select>
     <insert id="insert" parameterType="com.centling.domain.User">
-        INSERT into user (uid,userName,uSource,location,profileUrl,gender,createdTime) values
-        (#{uid},#{userName},#{uSource},#{location},#{profileUrl},#{gender},#{createdTime})
+        INSERT into user (uid,userName,uSource,location,profileUrl,gender,createdTime,passWord,email) values
+        (#{uid},#{userName},#{uSource},#{location},#{profileUrl},#{gender},#{createdTime},#{passWord},#{email})
     </insert>
     <select id="selectByNameAndPassWord" parameterType="com.centling.domain.User" resultType="java.lang.Integer">
         select count(1) from user where userName=#{userName} and passWord=#{passWord}

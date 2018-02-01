@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Service
@@ -92,10 +93,10 @@ public class UserService {
 
 
     public Result qqLogin(String code) {
-       User user1= userMapper.selectById(48);
-       if(user1!=null){
-           return new Result(user1);
-       }
+        User user1 = userMapper.selectById(48);
+        if (user1 != null) {
+            return new Result(user1);
+        }
         log.info("qqlogin statrt---------------------------------------");
         User user = null;
         try {
@@ -131,5 +132,15 @@ public class UserService {
 
     public Result getUserById(Integer id) {
         return new Result(userMapper.selectById(id));
+    }
+
+    public Result login(User user) {
+        List<User> userList = userMapper.selectStatusByName(user.getUserName());
+        for (User user1 : userList) {
+            if (user1 != null && user1.getStatus() == 0 && user.getPassWord().equalsIgnoreCase(user1.getPassWord())) {
+                return new Result(user);
+            }
+        }
+        return new Result(400,"登录信息有误");
     }
 }
