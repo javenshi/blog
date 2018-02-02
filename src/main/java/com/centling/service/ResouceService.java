@@ -52,7 +52,6 @@ public class ResouceService {
         GridReturnData<Resouce> mGridReturnData = new GridReturnData<>();
         Map map = gridPageRequest.getFilterList();
         map.put("searchKey", gridPageRequest.getSearchKey());
-        String sortMyBatisByString = gridPageRequest.getSortMybatisString();
         PageHelper.startPage(gridPageRequest.getPageNum(), gridPageRequest.getPageSize(), "");
         List<Resouce> list = resouceMapper.selectPage(map);
         PageInfo<Resouce> pageInfo = new PageInfo<>(list);

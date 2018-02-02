@@ -20,4 +20,14 @@
     <select id="selectStatusByName" parameterType="java.lang.String" resultType="com.centling.domain.User">
         select * from user where userName=#{userName}
     </select>
+    <select id="selectUserBlogClick" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select COALESCE(SUM(blogsClick),0) from blogs where userId=#{id}
+    </select>
+    <select id="selectUserResourceClick" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select COALESCE(SUM(resouceClick),0) from resource where userId=#{id}
+    </select>
+    <update id="updateUser" parameterType="com.centling.domain.User">
+        UPDATE user set userName=#{userName},location=#{location},profileUrl=#{profileUrl},gender=#{gender},email=#{email},description=#{description}
+        where id=#{id}
+    </update>
 </mapper>

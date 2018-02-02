@@ -15,4 +15,9 @@ public interface UserMapper {
     User selectById(int id);
 
     User selectUserByNameAndUid(@Param("name") String name,@Param("uid") String id);
+
+    void updateUser(User user);
+
+    int selectUserBlogClick(int id);
+    int selectUserResourceClick(int id);
 }

@@ -20,6 +20,8 @@ public class User {
     private String  lastModifiedName;
     private int  lastModifiedBy;
     private int  deleteFlag;
+    private int  blogclick;
+    private int  resouceClick;
     public User(){
 
     }
@@ -182,5 +184,21 @@ public class User {
 
     public void setDeleteFlag(int deleteFlag) {
         this.deleteFlag = deleteFlag;
+    }
+
+    public int getBlogclick() {
+        return blogclick;
+    }
+
+    public void setBlogclick(int blogclick) {
+        this.blogclick = blogclick;
+    }
+
+    public int getResouceClick() {
+        return resouceClick;
+    }
+
+    public void setResouceClick(int resouceClick) {
+        this.resouceClick = resouceClick;
     }
 }

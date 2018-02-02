@@ -10,11 +10,10 @@
     <select id="selectPage" parameterType="java.util.Map" resultType="com.centling.domain.Resouce">
         select * from resource where  deleteFlag=0
         <if test="resouceName!=null">
-            and resouceName like concat('%',#{resouceName},'%')
+            AND resouceName like concat('%',#{resouceName},'%')
+            or userName like concat('%',#{resouceName},'%')
         </if>
-        <if test="resouceName!=null">
-            and userName like concat('%',#{resouceName},'%')
-        </if>
+
         <if test="status!=null">
             and status= #{status}
         </if>

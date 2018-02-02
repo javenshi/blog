@@ -2,10 +2,12 @@ package com.centling.controller.blog;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.aliyun.oss.OSSClient;
 import com.centling.controller.LoginUserDto;
 import com.centling.domain.User;
 import com.centling.security.SecurityUtils;
 import com.centling.service.UserService;
+import com.centling.utils.OSSUtil;
 import com.centling.utils.Result;
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import org.apache.http.Consts;
@@ -20,7 +22,9 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -39,6 +43,8 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    OSSUtil ossUtil;
 
 
 
@@ -62,7 +68,19 @@ public class UserController {
       public Result login(@RequestBody User user) {
 
          return userService.login(user);
-      } /*
+      }
+      @PostMapping(value = "/updateUser")
+      public Result updateUser(@RequestBody User user) {
+
+         return userService.updateUser(user);
+      }
+    @RequestMapping(value = "/upl",method= RequestMethod.POST,produces= MediaType.APPLICATION_JSON_VALUE)
+    public Result upl(@RequestParam(value="file",required=false)MultipartFile file){
+        OSSClient ossClient= ossUtil.getUploadOSSClient();
+        String key=ossUtil.uploadToOSS(ossClient,"userater/",file);
+        return new Result(key);
+    }
+      /*
       @GetMapping(value = "/cheackName/{name}")
       public Result cheackName(@PathVariable String name) {
           return userService.cheackName(name, 0);

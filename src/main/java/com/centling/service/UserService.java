@@ -25,6 +25,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 @Service
@@ -75,6 +76,10 @@ public class UserService {
     @Transactional
     public User insertUser(User user, int scope) {
         if (userMapper.selectBySourceAndUid(scope, user.getUid()) == null) {
+            user.setProfileUrl("http://zx-blog.oss-cn-beijing.aliyuncs.com/Carousel/download.jpg");
+            user.setUid(UUID.randomUUID().toString());
+            user.setGender("f");
+            user.setuSource(0);
             insert(user);
         }
         user = userMapper.selectBySourceAndUid(scope, user.getUid());
@@ -138,9 +143,20 @@ public class UserService {
         List<User> userList = userMapper.selectStatusByName(user.getUserName());
         for (User user1 : userList) {
             if (user1 != null && user1.getStatus() == 0 && user.getPassWord().equalsIgnoreCase(user1.getPassWord())) {
-                return new Result(user);
+                user1= getUserClick(user1);
+                return new Result(user1);
             }
         }
         return new Result(400,"登录信息有误");
+    }
+
+    public Result updateUser(User user) {
+        userMapper.updateUser(user);
+        return new Result();
+    }
+    public User getUserClick(User user) {
+        user.setBlogclick(userMapper.selectUserBlogClick(user.getId()));
+        user.setResouceClick(userMapper.selectUserResourceClick(user.getId()));
+        return user;
     }
 }
