@@ -16,4 +16,6 @@ public interface ProposalMapper {
     void addPro(int id);
 
     List<Proposal> selectByPId(int id);
+
+
 }

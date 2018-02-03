@@ -70,4 +70,9 @@ public class ProposalService {
         proposalMapper.delete(id);
         return new Result();
     }
+
+    public Result getChildProposal(Integer id) {
+        List<Proposal> list= proposalMapper.selectByPId(id);
+        return new Result(list);
+    }
 }

@@ -15,6 +15,7 @@ public class Proposal {
     private int hasChild;
     private int pid;
     private String toUserName;
+    private String userProfileUrl;
     private List<Proposal> children;
 
 
@@ -66,6 +67,16 @@ public class Proposal {
     public void setBlogId(String blogId) {
         this.blogId = blogId;
     }
+
+    public String getUserProfileUrl() {
+        return userProfileUrl;
+    }
+
+    public void setUserProfileUrl(String userProfileUrl) {
+        this.userProfileUrl = userProfileUrl;
+    }
+
+
 
     public int getToUserId() {
         return toUserId;

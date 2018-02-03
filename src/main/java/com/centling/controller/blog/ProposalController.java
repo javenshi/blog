@@ -41,6 +41,10 @@ public class ProposalController {
 
         return proposalService.deleteRe(id);
     }
+    @PostMapping(value = "/getChildProposal/{id}")
+    public Result getChildProposal(@PathVariable Integer id){
+        return proposalService.getChildProposal(id);
+    }
     @PostMapping(value = "/getRankIng")
     public Result getRankIng(){
 

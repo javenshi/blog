@@ -5,14 +5,17 @@
 
 
     <insert id="insert" parameterType="com.centling.domain.Proposal">
-            INSERT INTO proposal (userId,userName,creatTime,context,blogId,pid,hasChild,toUserId,toUserName) values
-            (#{userId},#{userName},#{creatTime},#{context},#{blogId},#{pid},#{hasChild},#{toUserId},#{toUserName})
+            INSERT INTO proposal (userId,userName,creatTime,context,blogId,pid,hasChild,toUserId,toUserName,userProfileUrl) values
+            (#{userId},#{userName},#{creatTime},#{context},#{blogId},#{pid},#{hasChild},#{toUserId},#{toUserName},#{userProfileUrl})
     </insert>
 
     <select id="selectPage" parameterType="java.util.Map" resultType="com.centling.domain.Proposal">
         select * from proposal where 1=1
         <if test="noblog!=null">
             and blogId is null
+        </if>
+        <if test="blogId!=null">
+            and blogId =#{blogId}
         </if>
         <if test="index!=null">
             and pid =0
