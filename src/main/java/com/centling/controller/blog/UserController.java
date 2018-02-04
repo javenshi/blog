@@ -97,7 +97,7 @@ public class UserController {
      */
     @PostMapping(value = "/inser")
     public Result insert(@RequestBody User user) {
-        userService.insert(user);
+        userService.insertUser(user,0);
         return new Result(200,"注册成功");
     }
     @PostMapping(value = "/sendEmail")

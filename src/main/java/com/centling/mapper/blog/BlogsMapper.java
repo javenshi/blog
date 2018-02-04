@@ -9,7 +9,7 @@ import java.util.Map;
 public interface BlogsMapper {
     void insert(Blogs blogs);
 
-    String seletcClassifyById(Integer id);
+
 
     List<Blogs> selectPage(Map map);
 
@@ -27,6 +27,14 @@ public interface BlogsMapper {
 
     void addClassClick(Integer classId);
 
+    List<String> seletcClassifyName();
+
     Blogs selectTopBlogId(String id);
     Blogs selectDownBlogId(String id);
+
+    int selectClassByName(String className);
+
+    void insertClassName(String className);
+
+
 }

@@ -65,24 +65,27 @@ public class GridPageRequest implements Serializable{
 
 	public Map getFilterList() {
 		Map map = new HashMap();
-		filterList.stream().forEach(gridFilterInfo -> {//封装筛选条件
-			if (gridFilterInfo.getFilterKey() != null && gridFilterInfo.getFilterValue() != null) {
-				String filterValue = gridFilterInfo.getFilterValue();
-				Long timeValue = 0L;
-				if (gridFilterInfo.getFilterKey().toLowerCase().contains("time")) {
-					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-					Date date = null;
-					try {
-						date = simpleDateFormat.parse(filterValue);
-					} catch (ParseException e) {
-						e.printStackTrace();
+		if(filterList!=null){
+			filterList.stream().forEach(gridFilterInfo -> {//封装筛选条件
+				if (gridFilterInfo.getFilterKey() != null && gridFilterInfo.getFilterValue() != null) {
+					String filterValue = gridFilterInfo.getFilterValue();
+					Long timeValue = 0L;
+					if (gridFilterInfo.getFilterKey().toLowerCase().contains("time")) {
+						SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+						Date date = null;
+						try {
+							date = simpleDateFormat.parse(filterValue);
+						} catch (ParseException e) {
+							e.printStackTrace();
+						}
+						timeValue = date.getTime();
+						filterValue = timeValue.toString();
 					}
-					timeValue = date.getTime();
-					filterValue = timeValue.toString();
+					map.put(gridFilterInfo.getFilterKey(), filterValue);
 				}
-				map.put(gridFilterInfo.getFilterKey(), filterValue);
-			}
-		});
+			});
+		}
+
 
 		return map;
 	}

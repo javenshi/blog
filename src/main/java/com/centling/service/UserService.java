@@ -75,10 +75,12 @@ public class UserService {
 
     @Transactional
     public User insertUser(User user, int scope) {
+        if(user.getUid()==null||user.getUid()==""){
+            user.setUid(UUID.randomUUID().toString());
+        }
         if (userMapper.selectBySourceAndUid(scope, user.getUid()) == null) {
             user.setProfileUrl("http://zx-blog.oss-cn-beijing.aliyuncs.com/Carousel/download.jpg");
-            user.setUid(UUID.randomUUID().toString());
-            user.setGender("f");
+            user.setGender("n");
             user.setuSource(0);
             insert(user);
         }

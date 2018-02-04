@@ -1,5 +1,6 @@
 package com.centling.service;
 
+import com.centling.config.WebConfigurer;
 import com.centling.domain.*;
 import com.centling.mapper.blog.BlogsMapper;
 import com.centling.mapper.blog.CommentsMapper;
@@ -11,6 +12,7 @@ import com.centling.utils.GridReturnData;
 import com.centling.utils.Result;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,11 +30,12 @@ public class BlogsService {
     RedisClient redisClient;
     @Autowired
     RankIngMapper rankIngMapper;
+    private final org.slf4j.Logger log = LoggerFactory.getLogger(WebConfigurer.class);
 
 
     public Result insert(Blogs blogs) {
-        String ClassifyName = blogsMapper.seletcClassifyById(blogs.getBlogsClassifyId());
-        blogs.setBlogsClassifyName(ClassifyName);
+        int ClassifyId = blogsMapper.selectClassByName(blogs.getBlogsClassifyName());
+        blogs.setBlogsClassifyId(ClassifyId);
         User u = userMapper.selectById(blogs.getUserId());
         if (blogs.getId() != null) {
             blogs.setBlogsDate(System.currentTimeMillis());
@@ -48,7 +51,7 @@ public class BlogsService {
     public GridReturnData<Blogs> selectPage(GridPageRequest gridPageRequest) {
         GridReturnData<Blogs> mGridReturnData = new GridReturnData<>();
         Map map = gridPageRequest.getFilterList();
-        map.put("searchKey", gridPageRequest.getSearchKey());
+
         String sortMyBatisByString = gridPageRequest.getSortMybatisString();
         PageHelper.startPage(gridPageRequest.getPageNum(), gridPageRequest.getPageSize(), sortMyBatisByString);
         List<Blogs> list = blogsMapper.selectPage(map);
@@ -60,16 +63,21 @@ public class BlogsService {
     public Result getBlogsById(String id, String ip) {
         Blogs blogs = blogsMapper.getBlogsById(id);
         if (blogs != null) {
-            if (redisClient.getBlogsClick(id, ip) == null) {
-                redisClient.setBlogsClick(id, ip);
-                blogsMapper.addClick(id);
-                blogs.setBlogsClick(blogs.getBlogsClick() + 1);
-                Integer classId = blogsMapper.selectClassId(id);
-                blogsMapper.addClassClick(classId);
-                if (rankIngMapper.selectById(id.toString()) == null) {
-                    rankIngMapper.insert(new RankIng(id,blogs.getBlogsName()));
+            try {
+                if (redisClient.getBlogsClick(id, ip) == null) {
+                    redisClient.setBlogsClick(id, ip);
+                    blogsMapper.addClick(id);
+                    blogs.setBlogsClick(blogs.getBlogsClick() + 1);
+                    Integer classId = blogsMapper.selectClassId(id);
+                    blogsMapper.addClassClick(classId);
+                    if (rankIngMapper.selectById(id.toString()) == null) {
+                        rankIngMapper.insert(new RankIng(id, blogs.getBlogsName()));
+                    }
+                    rankIngMapper.addClick(id);
                 }
-                rankIngMapper.addClick(id);
+            } catch (Exception e) {
+                e.printStackTrace();
+                log.info("RedisExption------------------------------------------------------");
             }
             return new Result(blogs);
         }

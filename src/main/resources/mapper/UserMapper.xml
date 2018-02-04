@@ -18,7 +18,7 @@
         select count(1) from user where userName=#{userName} and passWord=#{passWord}
     </select>
     <select id="selectStatusByName" parameterType="java.lang.String" resultType="com.centling.domain.User">
-        select * from user where userName=#{userName}
+        select * from user where userName=#{userName} and uSource=0
     </select>
     <select id="selectUserBlogClick" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         select COALESCE(SUM(blogsClick),0) from blogs where userId=#{id}

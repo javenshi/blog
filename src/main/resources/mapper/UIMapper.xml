@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.centling.mapper.blog.UIMapper">
+
+    <insert id="insert" parameterType="com.centling.domain.UI">
+            INSERT INTO ui (uiName,brief,sample,uiClick,userId,userName
+            ,createdTime,profileUrl,status) values
+            (#{uiName},#{brief},#{sample},#{uiClick},#{userId},#{userName},
+            #{createdTime},#{profileUrl},#{status})
+    </insert>
+
+
+    <select id="selectPage" resultType="com.centling.domain.UI">
+        select * from ui where deleteFlag=0
+
+        <if test="status!=null">
+            and status=#{status}
+        </if>
+        ORDER BY createdTime desc
+    </select>
+
+    <update id="addClick" parameterType="java.lang.Integer">
+       UPDATE ui set uiClick=uiClick+1 where id=#{id}
+    </update>
+    <select id="selectById" parameterType="java.lang.Integer" resultType="com.centling.domain.UI">
+       SELECT * from ui  where id=#{id}
+    </select>
+
+    <update id="passUI">
+       UPDATE ui set status=#{status} where id=#{id};
+    </update>
+    <update id="deleteUI" >
+       update  ui set deleteFlag=1 ,deleteTime=#{deleteTime}  where id=#{id};
+    </update>
+
+</mapper>

@@ -5,12 +5,19 @@
     <insert id="insert" parameterType="com.centling.domain.Blogs">
 
             INSERT INTO blogs (id,blogsName,blogsStatus,blogsDate,blogsClassifyId,blogsClassifyName,userId,userName
-            ,createdTime,blogsPart,blogsUrl,profileUrl) values (#{id},#{blogsName},#{blogsStatus},#{blogsDate},#{blogsClassifyId},#{blogsClassifyName},#{userId},#{userName},
-            #{createdTime},#{blogsPart},#{blogsUrl},#{profileUrl})
+            ,createdTime,blogsPart,blogsUrl,profileUrl,status) values (#{id},#{blogsName},#{blogsStatus},#{blogsDate},#{blogsClassifyId},#{blogsClassifyName},#{userId},#{userName},
+            #{createdTime},#{blogsPart},#{blogsUrl},#{profileUrl},#{status})
     </insert>
-    <select id="seletcClassifyById" parameterType="java.lang.Integer" resultType="java.lang.String">
-        select blogsClassifyName from blogsclassify where blogsClassifyId=#{id}
+
+    <select id="seletcClassifyName" parameterType="java.lang.String" resultType="java.lang.String">
+        select blogsClassifyName from blogsclassify
         </select>
+    <select id="selectClassByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select blogsClassifyId from blogsclassify where blogsClassifyName=#{blogsClassifyName}
+        </select>
+    <insert id="insertClassName" parameterType="java.lang.String" >
+        INSERT INTO blogsclassify (blogsClassifyName) VALUES (#{blogsClassifyName})
+        </insert>
     <select id="selectPage" parameterType="java.util.Map" resultType="com.centling.domain.Blogs">
         select id,blogsName,blogsStatus,blogsDate,profileUrl,blogsClassifyId,blogsClassifyName,userId,userName
         ,createdTime,blogsPart ,status ,blogsClick from blogs where deleteFlag=0

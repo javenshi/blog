@@ -50,8 +50,12 @@ public class ResouceService {
 
     public Result getResouceList(GridPageRequest gridPageRequest) {
         GridReturnData<Resouce> mGridReturnData = new GridReturnData<>();
-        Map map = gridPageRequest.getFilterList();
-        map.put("searchKey", gridPageRequest.getSearchKey());
+        Map map= new HashMap();
+        if(gridPageRequest.getFilterList()!=null){
+            map=gridPageRequest.getFilterList();
+        }
+
+
         PageHelper.startPage(gridPageRequest.getPageNum(), gridPageRequest.getPageSize(), "");
         List<Resouce> list = resouceMapper.selectPage(map);
         PageInfo<Resouce> pageInfo = new PageInfo<>(list);

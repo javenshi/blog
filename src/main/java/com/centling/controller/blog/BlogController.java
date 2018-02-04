@@ -2,6 +2,7 @@ package com.centling.controller.blog;
 
 import com.centling.domain.Blogs;
 import com.centling.domain.Comments;
+import com.centling.mapper.blog.BlogsMapper;
 import com.centling.service.BlogsService;
 import com.centling.utils.GridPageRequest;
 import com.centling.utils.Result;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 public class BlogController {
     @Autowired
     BlogsService blogsService;
+    @Autowired
+    BlogsMapper blogsMapper;
 
     @RequestMapping(value = "/insert",method= RequestMethod.POST)
     public Result insert(@RequestBody Blogs blogs){
@@ -45,5 +48,14 @@ public class BlogController {
     @PostMapping(value = "/getComentsList/{size}")
     public Result getComentsList(@RequestBody Comments comments,@PathVariable Integer size){
         return blogsService.getComentsList(comments,size);
+    }
+    @PostMapping(value = "/seletcClassifyName")
+    public Result seletcClassifyName(){
+        return new Result(blogsMapper.seletcClassifyName());
+    }
+    @PostMapping(value = "/insertClassName")
+    public Result insertClassName(@RequestBody String className){
+        blogsMapper.insertClassName(className);
+        return new Result();
     }
 }

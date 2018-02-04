@@ -22,6 +22,7 @@ public class User {
     private int  deleteFlag;
     private int  blogclick;
     private int  resouceClick;
+    private int  authority;
     public User(){
 
     }
@@ -44,6 +45,14 @@ public class User {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(int authority) {
+        this.authority = authority;
     }
 
     public void setDescription(String description) {
