@@ -27,11 +27,11 @@ public class RedisClient {
         config.setMaxIdle(200);
         config.setMaxTotal(500);
         config.setMinIdle(50);
-        config.setMaxWaitMillis(10222);
+        config.setMaxWaitMillis(2000);
         config.setTestOnBorrow(true);
         // slave链接
         List<JedisShardInfo> shards = new ArrayList<JedisShardInfo>();
-        shards.add(new JedisShardInfo("39.108.12.206", 6379, "master"));
+        shards.add(new JedisShardInfo("127.0.0.1", 6379, "master"));
         // 构造池
         shardedJedisPool = new ShardedJedisPool(config, shards);
     }

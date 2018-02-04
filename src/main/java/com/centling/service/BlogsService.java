@@ -78,9 +78,12 @@ public class BlogsService {
             } catch (Exception e) {
                 e.printStackTrace();
                 log.info("RedisExption------------------------------------------------------");
+            }finally {
+                return new Result(blogs);
             }
-            return new Result(blogs);
+
         }
+
         return new Result(404, "");
     }
 

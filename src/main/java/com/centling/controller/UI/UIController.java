@@ -50,7 +50,9 @@ public class UIController {
         } } catch (Exception e) {
             e.printStackTrace();
             log.info("RedisExption------------------------------------------------------");
+        }finally {
+            return new Result(uiMapper.selectById(id));
         }
-        return new Result(uiMapper.selectById(id));
+
     }
 }
