@@ -22,6 +22,8 @@ import java.util.UUID;
 public class OSSUtil {
     @Value("${OSS.endpoint}")
     private String endpoint;
+    @Value("${OSS.innerEndpoint}")
+    private String innerEndpoint;
 
     @Value("${OSS.access_key_id}")
     private String access_key_id;
@@ -41,6 +43,9 @@ public class OSSUtil {
 
     public OSSClient getUploadOSSClient() {
         return new OSSClient(endpoint, access_key_id, access_key_secret);
+    }
+    public OSSClient getDownOSSClient() {
+        return new OSSClient(innerEndpoint, access_key_id, access_key_secret);
     }
 
    /* public  OSSClient getLoadClient() throws Exception {
@@ -89,12 +94,12 @@ public class OSSUtil {
             metadata.setContentEncoding("utf-8");
             metadata.setContentDisposition("filename/filesize=" + Name + "/" + fileSize + "Byte.");
             createFolder(ossClient,bucket_name,Folder);
-            PutObjectResult putResult = ossClient.putObject(bucket_name, Folder+Name, is, metadata);
+             ossClient.putObject(bucket_name, Folder+Name, is, metadata);
         } catch (Exception e) {
             e.printStackTrace();
         }
         Date expiration = new Date(new Date().getTime() + new Date().getTime());
-        return   ossClient.generatePresignedUrl(bucket_name, Folder+Name, expiration).toString();
+        return   getDownOSSClient().generatePresignedUrl(bucket_name, Folder+Name, expiration).toString();
     }
 
  /*   *//**
@@ -107,35 +112,8 @@ public class OSSUtil {
         return object;
     }*/
 
-    /**
-     * 获得一个有效的url
-     */
-    public String getUrl(OSSClient ossClient, String key) {
-        String bucketName = key.substring(0, key.indexOf(","));
-        String openKey = key.substring(key.indexOf(",") + 1);
-        Date expiration = new Date(new Date().getTime() + new Date().getTime());
-        return ossClient.generatePresignedUrl(bucketName, openKey, expiration).toString();
-    }
 
-    /**
-     * 创建存储空间
-     */
-    public String createBucket(OSSClient ossClient, String bucketName) {
-        final String bucketNames = bucketName;
-        if (!ossClient.doesBucketExist(bucketName)) {
-            //创建存储空间
-            Bucket bucket = ossClient.createBucket(bucketName);
-            return bucket.getName();
-        }
-        return bucketNames;
-    }
 
-    /**
-     * 删除存储空间
-     */
-    public void deleteBucket(OSSClient ossClient, String bucketName) {
-        ossClient.deleteBucket(bucketName);
-    }
 
     /**
      * 创建文件夹

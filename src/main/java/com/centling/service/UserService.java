@@ -65,6 +65,7 @@ public class UserService {
             JSONObject userInfo = HttpUtils.get(url);
             log.info("weibologin userInfo" + userInfo.toString() + "---------------------------------------");
             user = new User(userInfo.getString("idstr"), userInfo.getString("screen_name"), 1, userInfo.getString("location"), userInfo.getString("profile_image_url"), userInfo.getString("gender"), userInfo.getString("description"));
+
             user = insertUser(user, 1);
         } catch (Exception e) {
             log.info("weiboyichang+++++++++++++++++++++++++++++++++++++++++++++++");
@@ -78,10 +79,13 @@ public class UserService {
         if(user.getUid()==null||user.getUid()==""){
             user.setUid(UUID.randomUUID().toString());
         }
+        log.info("sope:"+scope+";uid:"+user.getUid()+"========================");
         if (userMapper.selectBySourceAndUid(scope, user.getUid()) == null) {
-            user.setProfileUrl("http://zx-blog.oss-cn-beijing.aliyuncs.com/Carousel/download.jpg");
-            user.setGender("n");
-            user.setuSource(0);
+            if(scope==0){
+                user.setProfileUrl("http://zx-blog.oss-cn-beijing.aliyuncs.com/Carousel/download.jpg");
+                user.setGender("n");
+                user.setuSource(0);
+            }
             insert(user);
         }
         user = userMapper.selectBySourceAndUid(scope, user.getUid());
