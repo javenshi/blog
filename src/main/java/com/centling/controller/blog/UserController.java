@@ -9,6 +9,7 @@ import com.aliyuncs.dm.model.v20151123.SingleSendMailRequest;
 import com.aliyuncs.dm.model.v20151123.SingleSendMailResponse;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import com.centling.config.WebConfigurer;
 import com.centling.controller.LoginUserDto;
 import com.centling.domain.User;
 import com.centling.security.SecurityUtils;
@@ -56,12 +57,14 @@ public class UserController {
     UserService userService;
     @Autowired
     OSSUtil ossUtil;
+    private final org.slf4j.Logger log = LoggerFactory.getLogger(WebConfigurer.class);
+
     static final Properties props = new Properties();
     static{
 
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.host", "smtpdm.aliyun.com");
-        props.put("mail.smtp.port", 25);
+        props.put("mail.smtp.port", 80);
         props.put("mail.user", "zxservice@zhixiang.org.cn");
         props.put("mail.password", "ABCDefg123");
 
@@ -166,6 +169,7 @@ public class UserController {
             Transport.send(message);
         }
         catch (MessagingException e) {
+            log.info("邮件异常："+e.getMessage());
            e.printStackTrace();
 
         }
